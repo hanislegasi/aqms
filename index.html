@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-Qawthar Mawaris Synergy - Pewarisan Islam</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans bg-gray-50 selection:bg-[#d8ae81] selection:text-[#153638]">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 shadow-md font-inter" style="background-color: #153638;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-24">
+        
+        <!-- Logo Area -->
+        <div id="header-logo-container" class="flex items-center cursor-pointer h-full py-2" onclick="setActiveTab('utama')">
+          <img id="header-logo" src="https://i.postimg.cc/JhLc8szZ/Copy-of-A.png" alt="AQMS Logo" class="h-full max-h-20 w-auto object-contain" onerror="handleLogoError()">
+        </div>
+        
+        <!-- Desktop Nav -->
+        <nav id="desktop-nav" class="hidden md:flex space-x-1 items-center"></nav>
+        
+        <!-- Mobile Menu Toggle -->
+        <div class="md:hidden">
+          <button onclick="toggleMobileMenu()" class="p-2" id="mobile-menu-btn">
+            <i data-lucide="menu" class="h-7 w-7 text-white"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Nav Area -->
+    <div id="mobile-nav" class="hidden"></div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <div class="relative pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden font-inter" style="background-color: #153638;">
+    <div class="relative max-w-7xl mx-auto px-4 text-center">
+      
+      <!-- Hero Icon / Logo -->
+      <div id="hero-media"></div>
+
+      <!-- Hero Text -->
+      <h1 class="text-3xl tracking-tight font-extrabold text-white sm:text-5xl lg:text-6xl mb-6">
+        <span class="block" id="hero-title"></span>
+        <span class="block mt-2 text-2xl md:text-3xl font-medium" style="color: #d8ae81;" id="hero-subtitle"></span>
+      </h1>
+      <p class="mt-3 max-w-md mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl" id="hero-desc"></p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-grow -mt-10 z-10 relative mb-12 font-inter">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-8 sm:p-12">
+        <div class="flex flex-col md:flex-row gap-10">
+          <div class="flex-1">
+            <!-- Dynamic Details -->
+            <div id="content-details" class="prose prose-lg max-w-none text-gray-600"></div>
+            
+            <div class="mt-10 pt-6 border-t border-gray-100">
+              <button class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95" style="background-color: #153638;">
+                Hubungi Pakar Kami <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Sidebar Nav -->
+          <aside class="hidden md:block w-64 flex-shrink-0">
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 sticky top-32">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 border-b pb-2">Navigasi Pantas</h4>
+              <ul id="sidebar-nav" class="space-y-2"></ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto py-16 font-inter" style="background-color: #0f292a; color: #f8f9fa;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+        <div class="flex flex-col items-center md:items-start">
+          <div class="flex items-center space-x-4 mb-6">
+            <div class="bg-white p-2 rounded-none-lg h-14 flex items-center justify-center">
+              <img src="https://i.postimg.cc/N0n5P1R7/LOGO-HANS-LEGASI-BARU-transparent.png" alt="Hans Legasi" class="h-full object-contain" />
+            </div>
+            <div class="bg-white p-2 rounded-none-lg h-14 flex items-center justify-center">
+              <img src="https://i.postimg.cc/JhLc8szZ/Copy-of-A.png" alt="AQMS" class="h-full object-contain" />
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4 text-justify">
+            <strong>Rakan Strategik Hans Legasi Resources Sdn. Bhd.</strong><br/>
+            Hans Legasi Resources Sdn. Bhd. (1338627-W) merupakan sebuah syarikat pakar perunding & perancang harta dan pusaka yang beroperasi di Sitiawan, Perak bermula pada tahun 2019. 
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block" style="color: #d8ae81;">Hubungi Kami</h4>
+          <ul class="space-y-4 text-sm text-gray-300">
+            <li class="flex items-center justify-center md:justify-start">
+              <i data-lucide="phone" class="w-5 h-5 mr-3" style="color: #d8ae81;"></i> +60 12-345 6789
+            </li>
+            <li class="flex items-center justify-center md:justify-start">
+              <i data-lucide="mail" class="w-5 h-5 mr-3" style="color: #d8ae81;"></i> info@alqawtharmawaris.com.my
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block" style="color: #d8ae81;">Lokasi Utama</h4>
+          <ul class="space-y-4 text-sm text-gray-300">
+            <li class="flex items-start justify-center md:justify-start">
+              <i data-lucide="map-pin" class="w-5 h-5 mr-3 mt-1" style="color: #d8ae81;"></i> 
+              <span>Pusat Komersial Mawaris,<br/>50000 Kuala Lumpur, Malaysia.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-white/5 text-center text-xs text-gray-500 font-bold uppercase tracking-widest">
+        &copy; <span id="current-year"></span> Al-Qawthar Mawaris Synergy. Hak Cipta Terpelihara.
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT UNTUK DATA, LOGIK & RENDER -->
+  <script>
+    // CONFIGURATION URL LOGO & CONFIG
+    const LOGO_URLS = {
+      main: "https://i.postimg.cc/JhLc8szZ/Copy-of-A.png"
+    };
+
+    const URL_CONFIG = {
+      kalkulator: "https://mytadbir.com/kalkulator",
+      wasiat: "https://wasiatku.my?cid=252"
+    };
+
+    const theme = {
+      primary: '#153638', 
+      accent: '#d8ae81',  
+      light: '#f8f9fa',
+      dark: '#0f292a'
+    };
+
+    // CONTENT DATA
+    const contentData = {
+      utama: {
+        id: 'utama',
+        title: 'Laman Utama',
+        iconName: 'book-open',
+        hero: 'Pakar Perundingan Pewarisan Islam Anda',
+        description: 'Selamat datang ke Al-Qawthar Mawaris Synergy, rakan strategik anda dalam merancang dan menguruskan harta pusaka berlandaskan syariat Islam.',
+        details: `
+          <div class="space-y-4 text-gray-700 leading-relaxed font-inter text-justify">
+            <p>
+              Pengurusan harta pusaka yang baik bermula dengan perancangan yang rapi ketika hayat. Di <strong>Al-Qawthar Mawaris Synergy</strong>, kami komited untuk memberikan khidmat nasihat, perancangan, dan pelaksanaan yang terbaik demi melindungi masa depan waris dan keluarga yang anda sayangi.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
+                <i data-lucide="shield-check" class="w-10 h-10 mx-auto mb-4" style="color: ${theme.accent}"></i>
+                <h4 class="font-bold text-[#153638] mb-2 font-inter">Patuh Syariah</h4>
+                <p class="text-sm text-gray-500">Semua perancangan berlandaskan hukum Faraid dan fatwa terkini.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
+                <i data-lucide="users" class="w-10 h-10 mx-auto mb-4" style="color: ${theme.accent}"></i>
+                <h4 class="font-bold text-[#153638] mb-2 font-inter">Pakar Berpengalaman</h4>
+                <p class="text-sm text-gray-500">Rangkaian perunding, peguam syarie dan pakar kewangan.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
+                <i data-lucide="briefcase" class="w-10 h-10 mx-auto mb-4" style="color: ${theme.accent}"></i>
+                <h4 class="font-bold text-[#153638] mb-2 font-inter">Solusi Menyeluruh</h4>
+                <p class="text-sm text-gray-500">Dari perancangan sehinggalah pentadbiran harta pusaka.</p>
+              </div>
+              </div>
+              <div class="mt-8">
+              <img 
+              src="https://i.postimg.cc/qqW9QDNv/Presentation-Perancangan-Harta-(1).png" 
+              alt="Pengurusan Pusaka" 
+              class="w-full h-auto rounded"
+               />
+              <p class="text-sm text-gray-500 mt-2 text-center">
+              Ilustrasi pengurusan harta pusaka secara sistematik
+              </div>
+            </div>
+          </div>
+        `
+      },
+      wasiat: {
+        id: 'wasiat',
+        title: 'Wasiat',
+        iconName: 'scroll-text',
+        hero: 'Rancang Agihan Harta & Pesanan Terakhir',
+        description: 'Dokumen perancangan untuk mengagihkan sehingga 1/3 harta kepada bukan waris dan melantik pentadbir amanah.',
+        details: `
+          <div class="space-y-6 text-gray-700 leading-relaxed font-inter text-justify">
+<p class="text-sm text-gray-700">
+    <p><strong>WASIAT</strong> merupakan satu instrumen penting dalam perancangan harta Islam yang membolehkan seseorang menyatakan hasrat agihan harta serta melantik pentadbir yang dipercayai. Ia juga membantu memastikan urusan selepas kematian berjalan lancar dan teratur mengikut kehendak syarak.
+
+    <p>Dokumen wasiat yang kami sediakan melibatkan 3 perkara utama iaitu pewasiat akan melantik wasi, menetapkan wasiat 1/3 daripada hartanya dan yang terakhir menyampaikan pesanan kepada waris-warisnya.
+  </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 border rounded-xl bg-gray-50">
+                <h4 class="font-bold text-[#153638] mb-2">1. Wasiat Lantik Wasi</h4>
+                <p class="text-sm text-gray-700">Melantik pentadbir (Wasi) yang dipercayai untuk menguruskan pembahagian harta dan melangsaikan hutang.</p>
+              </div>
+              <div class="p-4 border rounded-xl bg-gray-50">
+                <h4 class="font-bold text-[#153638] mb-2">2. Wasiat 1/3</h4>
+                <p class="text-sm text-gray-700">Pemberian sebahagian harta (maksimum 1/3) kepada pihak bukan waris seperti anak angkat atau badan kebajikan.</p>
+              </div>
+              <div class="p-4 border rounded-xl bg-gray-50">
+                <h4 class="font-bold text-[#153638] mb-2">3. Wasiat Pesanan</h4>
+                <p class="text-sm text-gray-600">Pesanan moral atau agama kepada ahli keluarga untuk mengekalkan keharmonian.</p>
+              </div>
+            </div>
+            <div class="bg-[#fdfaf6] p-5 border-l-4 rounded-r-lg" style="border-color: ${theme.accent}">
+              <h4 class="font-bold mb-2 flex items-center"><i data-lucide="info" class="w-4 h-4 mr-2"></i> Contoh Wasiat Pesanan</h4>
+              <p class="text-sm italic">"Saya berpesan kepada semua anak-anak saya agar sentiasa menjaga solat, mengekalkan silaturahim sesama adik-beradik, dan tidak bertelingkah atas harta dunia yang ditinggalkan."</p>
+            </div>
+            <div class="mt-6">
+              <a href="${URL_CONFIG.wasiat}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 rounded-lg text-white font-bold transition-all shadow-md hover:shadow-lg" style="background-color: ${theme.primary}">
+                Sediakan Wasiat Online <i data-lucide="external-link" class="ml-2 w-4 h-4"></i>
+              </a>
+               <form id="leadFormWasiat" class="space-y-3 mt-6">
+
+    <input type="text" name="nama" placeholder="Nama" required class="w-full p-3 border rounded-lg">
+
+<input type="email" name="email" placeholder="Email" required class="w-full p-3 border rounded-lg">
+
+<input type="text" name="telefon" placeholder="Telefon" required class="w-full p-3 border rounded-lg">
+
+<!-- PERKHIDMATAN (Dropdown) -->
+<select name="perkhidmatan" required class="w-full p-3 border rounded-lg">
+  <option value="" disabled selected>Pilih Perkhidmatan</option>
+  <option value="Wasiat">Wasiat</option>
+  <option value="Hibah">Hibah</option>
+  <option value="Faraid">Faraid</option>
+  <option value="Harta Sepencarian">Harta Sepencarian</option>
+</select>
+
+<!-- KAEDAH HUBUNGI (Dropdown) -->
+<select name="kaedah" required class="w-full p-3 border rounded-lg">
+  <option value="" disabled selected>Pilih Kaedah Dihubungi</option>
+  <option value="WhatsApp">WhatsApp</option>
+  <option value="Call">Call</option>
+  <option value="Email">Email</option>
+</select>
+
+<!-- TARIKH (Date Picker) -->
+<input type="date" name="tarikh" required class="w-full p-3 border rounded-lg">
+
+    <button type="submit" class="w-full bg-[#153638] text-white py-3 rounded-lg font-bold">
+      Hantar
+    </button>
+
+  </form>
+              </div>
+          </div>
+        `
+      },
+      hibah: {
+        id: 'hibah',
+        title: 'Hibah',
+        iconName: 'gift',
+        hero: 'Hadiah Kasih Sayang Tanpa Syarat',
+        description: 'Pemberian harta secara sukarela semasa hidup yang terkeluar daripada sistem pembahagian Faraid.',
+        details: `
+<div class="space-y-6 text-gray-700 font-inter text-justify">
+<p class="text-sm text-gray-700">
+    <p><strong>HIBAH</strong> merupakan satu instrumen penting dalam Islam yang membolehkan seseorang mengagihkan harta miliknya secara sukarela ketika masih hidup, dengan niat untuk menjaga kebajikan dan kesejahteraan ahli keluarga. Dalam suasana hari ini, hibah dilihat sebagai satu langkah bijak bagi mengelakkan pertikaian harta pusaka serta memastikan hak individu tertentu seperti pasangan, anak angkat atau pihak yang memerlukan terus terpelihara.
+
+    <p>Islam amat menitikberatkan keadilan dan keharmonian dalam pengurusan harta. Justeru, hibah menjadi salah satu jalan penyelesaian yang patuh syariah, selagi ia dilaksanakan dengan jelas, tanpa penipuan, serta tidak menzalimi mana-mana pihak. Ia juga mencerminkan sifat kasih sayang, tanggungjawab dan perancangan awal seseorang terhadap masa depan keluarganya.
+  </p>
+   
+          <div class="space-y-6 font-inter">
+            <h3 class="text-xl font-bold" style="color: ${theme.primary}">3 Jenis Hibah Utama</h3>
+            <div class="space-y-4">
+              <div class="flex items-start p-4 bg-white border rounded-xl shadow-sm">
+                <i data-lucide="check-circle-2" class="w-6 h-6 mr-3 flex-shrink-0" style="color: ${theme.accent}"></i>
+                <div>
+                  <h4 class="font-bold">Hibah Mutlak</h4>
+                  <p class="text-sm text-gray-600">Pemberian harta secara serta-merta tanpa sebarang syarat.</p>
+                </div>
+              </div>
+              <div class="flex items-start p-4 bg-white border rounded-xl shadow-sm">
+                <i data-lucide="check-circle-2" class="w-6 h-6 mr-3 flex-shrink-0" style="color: ${theme.accent}"></i>
+                <div>
+                  <h4 class="font-bold">Hibah Amanah</h4>
+                  <p class="text-sm text-gray-600">Melibatkan pelantikan pemegang amanah untuk pengurusan harta.</p>
+                </div>
+              </div>
+              <div class="flex items-start p-4 bg-white border rounded-xl shadow-sm">
+                <i data-lucide="check-circle-2" class="w-6 h-6 mr-3 flex-shrink-0" style="color: ${theme.accent}"></i>
+                <div>
+                  <h4 class="font-bold">Hibah Bersyarat / Takaful</h4>
+                  <p class="text-sm text-gray-600">Manfaat diberikan selepas kematian pemberi.</p>
+                </div>
+                </div>
+     <p>Oleh itu, umat Islam diseru untuk tidak memandang ringan soal perancangan harta. Ambillah langkah bijak dengan merancang hibah dari sekarang agar harta yang dimiliki menjadi asbab kebaikan, bukan punca perpecahan.
+   </p>
+
+              </div>
+            </div>
+          </div>
+        `
+      },
+      harta_sepencarian: {
+        id: 'harta_sepencarian',
+        title: 'Harta Sepencarian',
+        iconName: 'users',
+        hero: 'Hak Bersama Suami Isteri',
+        description: 'Tuntutan hak ke atas harta yang diperoleh bersama sepanjang tempoh perkahwinan.',
+        details: `
+          <div class="space-y-4 text-gray-700 font-inter text-justify">
+            <p>Sebelum proses pembahagian harta pusaka secara faraid dilaksanakan, pasangan yang masih hidup tidak terus menerima bahagian tersebut secara automatik.</p>
+            <p>Sebaliknya, mereka perlu terlebih dahulu mengemukakan tuntutan di Mahkamah Tinggi Syariah bagi mendapatkan pengesahan serta pengiktirafan terhadap hak mereka.</p>
+            <p>Langkah ini penting kerana ia memastikan segala tuntutan dibuat secara sah di sisi undang-undang Islam, di samping mengelakkan berlakunya pertikaian antara waris.</p>
+            <p>Setelah mahkamah membuat keputusan dan hak pasangan yang masih hidup diiktiraf, barulah harta pusaka tersebut boleh dibahagikan mengikut hukum faraid yang telah ditetapkan.</p>
+            <p><strong>Oleh itu, setiap waris yang terlibat disarankan untuk memahami proses tuntutan ini dengan jelas agar pembahagian harta dapat dilaksanakan secara teratur, adil dan mengikut lunas syarak.</strong></p>
+          </div>
+        `
+      },
+      faraid: {
+        id: 'faraid',
+        title: 'Faraid',
+        iconName: 'scale',
+        hero: 'Hukum Pembahagian Syarak',
+        description: 'Sistem perundangan Islam dalam mengagihkan harta pusaka si mati kepada waris-waris yang berhak.',
+        details: `
+          <div class="space-y-4 text-gray-700 font-inter text-justify">
+            <p><strong>FARAID</strong> merupakan kaedah pembahagian harta pusaka dalam Islam yang telah ditetapkan dengan jelas, di mana setiap waris menerima bahagian tertentu berdasarkan hubungan kekeluargaan.</p>
+            <p>Agihan ini melibatkan waris seperti pasangan (suami/isteri), anak-anak, ibu bapa dan waris lain yang layak.</p>
+            <p>Sebagai contoh, jika si mati meninggalkan seorang isteri dan anak-anak, isteri akan menerima 1/8 (12.5%) daripada harta pusaka jika ada anak, manakala baki diagihkan kepada anak-anak dengan nisbah anak lelaki 2 bahagian dan anak perempuan 1 bahagian. Jika tiada anak lelaki dan hanya seorang anak perempuan, beliau boleh menerima sehingga 1/2 (50%), manakala jika dua orang atau lebih anak perempuan, mereka berkongsi 2/3 (66.7%) daripada harta pusaka. Ibu pula lazimnya menerima 1/6 (16.7%) jika si mati mempunyai anak.</p>
+            <p>Sebagaimana firman Allah SWT dalam Surah An-Nisa ayat 11:<br/>
+            <strong>"Allah mensyariatkan bagimu tentang (pembahagian pusaka untuk) anak-anakmu, iaitu bahagian seorang anak lelaki sama dengan bahagian dua orang anak perempuan..."</strong></p>
+            <p>Dilaksanakan setelah ditolak kos pengurusan jenazah, penyelesaian hutang, dan wasiat.</p>
+          </div>
+        `
+      },
+      urus_pusaka: {
+        id: 'urus_pusaka',
+        title: 'Urus Pusaka',
+        iconName: 'briefcase',
+        hero: 'Kemudahan Pentadbiran Pusaka',
+        description: 'Kami memudahkan urusan birokrasi dan pentadbiran pusaka agar waris tidak terbeban.',
+        details: `
+          <div class="space-y-4 text-gray-700 font-inter text-justify">
+            <p>Kami membantu dari penyediaan Surat Kuasa Mentadbir sehinggalah pengagihan aset kepada waris.</p>
+            <li class="flex items-start space-x-2"><span class="mt-1 flex-shrink-0">&bull;</span><span><strong>Pengurusan Pusaka – Kaunseling Waris:</strong> Memberikan perkhidmatan kaunseling yang komprehensif kepada pihak waris atau ahli keluarga bagi membantu mereka memahami segala aspek berkaitan pengurusan pusaka. Ini termasuk penerangan mengenai prosedur, hak waris, pembahagian harta, serta langkah-langkah yang perlu diambil bagi memastikan proses berjalan dengan lancar. Pendekatan yang digunakan adalah mesra, telus dan berfokus kepada penyelesaian agar setiap waris dapat membuat keputusan yang tepat tanpa kekeliruan.</span></li>
+            <li class="flex items-start space-x-2"><span class="mt-1 flex-shrink-0">&bull;</span><span><strong>Pengurusan Pentadbiran:</strong> Mengurus dan menyelaras segala urusan pentadbiran berkaitan tuntutan dan pembahagian pusaka sama ada di Pejabat Pusaka Kecil atau di Mahkamah Tinggi. Perkhidmatan ini merangkumi penyediaan dokumen, pemfailan kes, pemantauan proses, serta komunikasi dengan pihak berkuasa berkaitan bagi memastikan setiap prosedur dipatuhi dengan betul. Matlamatnya adalah untuk memudahkan urusan waris serta mempercepatkan penyelesaian kes secara sistematik dan efisien.</span></li>
+          </div>
+        `
+      },
+      mytadbir: {
+        id: 'mytadbir',
+        title: 'MyTadbir',
+        iconName: 'calculator',
+        hero: 'Sistem Pengurusan Harta Pintar',
+        description: 'Aplikasi kalkulator ringkas untuk anggaran perancangan & pengurusan harta pusaka anda.',
+        details: `
+          <div class="space-y-6 text-gray-700 font-inter">
+            <div class="bg-white border rounded-2xl p-6 shadow-lg">
+              <h3 class="text-xl font-bold mb-4 flex items-center" style="color: ${theme.primary}">
+                <i data-lucide="calculator" class="mr-2"></i> Apa yang boleh dikira?
+              </h3>
+              <ul class="list-disc pl-5 space-y-2 text-justify">
+                <li class="flex items-start space-x-2"><span><strong>Profil & Keluarga:</strong> Mengumpul data asas (umur, jantina, komposisi anak). Ini adalah nadi sistem kerana pengiraan Faraid dan unjuran masa depan berubah mengikut siapa waris anda.</span></li>
+                <li class="flex items-start space-x-2"><span><strong>Harta Semasa (Net Worth):</strong> Merekod aset cair (simpanan), aset fizikal (hartanah), dan semua hutang. Tujuannya adalah untuk mengetahui Nilai Harta Bersih anda yang sebenar pada hari ini.</span></li>
+                <li class="flex items-start space-x-2"><span><strong>Unjuran Bersara & Pendidikan:</strong> Melakukan simulasi sama ada simpanan anda cukup untuk hari tua dan kos universiti anak. Ia memberitahu bila duit anda akan habis dengan mengambil kira faktor inflasi.</span></li>
+                <li class="flex items-start space-x-2"><span><strong>Penyucian Harta (Zakat):</strong> Kalkulator automatik untuk Zakat Simpanan (2.5%). Tujuannya untuk memastikan harta yang dikumpul bersih dan mengikut syariat Islam semasa hidup.</span></li>
+                <li class="flex items-start space-x-2"><span><strong>Senario Mati (Faraid):</strong> Simulasi aliran harta selepas kematian—menolak kos jenazah, harta sepencarian, dan hutang sebelum baki dibahagikan mengikut Hukum Faraid. Ia menunjukkan siapa yang berhak dan siapa yang terhalang.</span></li>
+                <li class="flex items-start space-x-2"><span><strong>Pelindung (Hibah Takaful):</strong> Menganalisis jurang kewangan waris untuk tempoh 10 tahun akan datang. Ia bertujuan mencadangkan nilai Hibah Takaful yang tepat untuk menutup kekurangan dana (Income Replacement) bagi pasangan dan anak-anak.</span></li>
+              </ul>
+            </div>
+            <div class="text-center py-6">
+              <a href="${URL_CONFIG.kalkulator}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-10 py-4 text-lg font-bold rounded-2xl shadow-xl text-white transition-all hover:scale-105 active:scale-95" style="background-color: ${theme.primary}">
+                Buka Kalkulator MyTadbir <i data-lucide="external-link" class="ml-2 w-5 h-5" style="color: ${theme.accent}"></i>
+              </a>
+            </div>
+          </div>
+        `
+      },
+      lain_lain: {
+        id: 'lain_lain',
+        title: 'Lain-lain Servis',
+        iconName: 'file-text',
+        hero: 'Penyelesaian Holistik & Korporat',
+        description: 'Melengkapi keperluan spesifik anda dengan pelbagai perkhidmatan amanah.',
+        details: `<div class="text-gray-700 font-inter">Amanah (Trust), Wakaf Korporat, dan Rundingan Syariah.</div>`
+      }
+    };
+
+    
+
+    const navItems = Object.keys(contentData);
+
+    // STATE PENGURUSAN
+    let activeTab = 'utama';
+    let isMobileMenuOpen = false;
+    let logoError = false;
+
+    // FUNGSI RENDER
+    function renderApp() {
+      const currentContent = contentData[activeTab];
+
+      // 1. Render Desktop Nav
+      const desktopNav = document.getElementById('desktop-nav');
+      desktopNav.innerHTML = navItems.map(key => {
+        const isActive = activeTab === key;
+        const classes = isActive 
+          ? `bg-[#0f292a] text-[#d8ae81] border-b-2 border-[#d8ae81]` 
+          : `text-gray-300 hover:bg-[#0f292a] hover:text-[#d8ae81]`;
+        return `<button onclick="setActiveTab('${key}')" class="px-3 py-2 rounded-md text-sm font-bold transition-all duration-200 ${classes}">${contentData[key].title}</button>`;
+      }).join('');
+
+      // 2. Render Mobile Nav
+      const mobileNav = document.getElementById('mobile-nav');
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      
+      if (isMobileMenuOpen) {
+        mobileBtn.innerHTML = `<i data-lucide="x" class="h-7 w-7 text-white"></i>`;
+        mobileNav.innerHTML = `
+          <div class="md:hidden bg-[#0f292a] border-t border-[#1a4346]">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+              ${navItems.map(key => {
+                const isActive = activeTab === key;
+                const classes = isActive ? 'bg-[#153638] text-white border-l-4 border-[#d8ae81]' : 'text-gray-300';
+                return `
+                <button onclick="setActiveTab('${key}'); toggleMobileMenu(false);" class="flex items-center w-full px-3 py-3 rounded-md text-base font-bold ${classes}">
+                  <span class="mr-3" style="color: ${theme.accent}"><i data-lucide="${contentData[key].iconName}" class="w-6 h-6"></i></span>
+                  ${contentData[key].title}
+                </button>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+        mobileNav.classList.remove('hidden');
+      } else {
+        mobileBtn.innerHTML = `<i data-lucide="menu" class="h-7 w-7 text-white"></i>`;
+        mobileNav.classList.add('hidden');
+      }
+
+      // 3. Render Hero Content
+      document.getElementById('hero-title').innerText = currentContent.title;
+      document.getElementById('hero-subtitle').innerText = currentContent.hero;
+      document.getElementById('hero-desc').innerText = currentContent.description;
+      
+      const heroMedia = document.getElementById('hero-media');
+      if (activeTab === 'utama') {
+        heroMedia.innerHTML = `
+          <div class="flex justify-center mb-8">
+            <div class="bg-white/5 p-4 rounded-2xl backdrop-blur-sm border border-white/10 shadow-2xl">
+              <img 
+                src="${LOGO_URLS.main}" 
+                alt="Main Logo" 
+                class="h-20 md:h-28 w-auto object-contain"
+                onerror="this.src='https://via.placeholder.com/200x80?text=LOGO+UTAMA'"
+              />
+            </div>
+          </div>
+        `;
+      } else {
+        heroMedia.innerHTML = `
+          <div class="flex justify-center mb-6">
+            <div class="p-4 rounded-full bg-white/5 border border-white/10 shadow-lg text-[#d8ae81] scale-150 transform transition-transform">
+              <i data-lucide="${currentContent.iconName}" class="w-6 h-6"></i>
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. Render Main Details & Sidebar
+      document.getElementById('content-details').innerHTML = currentContent.details;
+
+      const sidebarNav = document.getElementById('sidebar-nav');
+      sidebarNav.innerHTML = navItems.map(key => {
+        const isActive = activeTab === key;
+        const activeClass = isActive ? 'bg-white shadow-md font-bold' : 'text-gray-600 hover:bg-gray-100';
+        const inlineStyle = isActive ? `border-left: 4px solid ${theme.accent}; color: ${theme.primary};` : ``;
+        const iconColor = isActive ? theme.accent : 'inherit';
+        
+        return `
+        <li>
+          <button onclick="setActiveTab('${key}')" class="w-full flex items-center text-left px-3 py-3 text-sm rounded-lg transition-all ${activeClass}" style="${inlineStyle}">
+            <span class="mr-3" style="color: ${iconColor}"><i data-lucide="${contentData[key].iconName}" class="w-4 h-4"></i></span>
+            ${contentData[key].title}
+          </button>
+        </li>`;
+      }).join('');
+
+      // Refresh Lucide Icons after DOM changes
+      lucide.createIcons();
+    }
+
+    // INTERAKSI PENGGUNA
+    function setActiveTab(tab) {
+      activeTab = tab;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderApp();
+    }
+
+    function toggleMobileMenu(forceState) {
+      if (typeof forceState === 'boolean') {
+        isMobileMenuOpen = forceState;
+      } else {
+        isMobileMenuOpen = !isMobileMenuOpen;
+      }
+      renderApp();
+    }
+
+    function handleLogoError() {
+      if (!logoError) {
+        logoError = true;
+        document.getElementById('header-logo-container').innerHTML = `
+          <div class="flex flex-col"><span class="text-2xl font-bold tracking-wide text-white">AQ<span style="color: ${theme.accent}">MS</span></span></div>
+        `;
+      }
+    }
+
+    // INIT
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('current-year').innerText = new Date().getFullYear();
+      renderApp();
+    });
+
+  </script>
+  <script>
+document.addEventListener("submit", function(e) {
+
+  if (e.target && e.target.id === "leadFormWasiat") {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const data = {
+      nama: form.nama.value,
+      email: form.email.value,
+      telefon: form.telefon.value,
+      perkhidmatan: form.perkhidmatan.value,
+      kaedah: form.kaedah.value,
+      tarikh: form.tarikh.value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbxTQJGoneHXIe4CSL4pjgP5EW7ogedrKzywydLuUFbC2P24-gb0kefO8fvOFnnZsIUH3A/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(() => {
+      alert("Berjaya hantar!");
+      form.reset();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error hantar form");
+    });
+  }
+
+});
+</script>
+</body>
+</html>
