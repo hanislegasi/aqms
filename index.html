@@ -544,21 +544,12 @@ document.addEventListener("submit", function(e) {
 
     const form = e.target;
 
-    const data = {
-      nama: form.nama.value,
-      email: form.email.value,
-      telefon: form.telefon.value,
-      perkhidmatan: form.perkhidmatan.value,
-      kaedah: form.kaedah.value,
-      tarikh: form.tarikh.value
-    };
+     const formData = new FormData(form);
 
     fetch("https://script.google.com/macros/s/AKfycbxTQJGoneHXIe4CSL4pjgP5EW7ogedrKzywydLuUFbC2P24-gb0kefO8fvOFnnZsIUH3A/exec", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      body: formData,
+      mode: "no-cors"
     })
     .then(res => res.text())
     .then(() => {
@@ -569,6 +560,7 @@ document.addEventListener("submit", function(e) {
       console.error(err);
       alert("Error hantar form");
     });
+
   }
 
 });
