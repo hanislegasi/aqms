@@ -544,22 +544,21 @@ document.addEventListener("submit", function(e) {
 
     const form = e.target;
 
-     const formData = new FormData(form);
+     const data = new URLSearchParams(new FormData(form));
 
     fetch("https://script.google.com/macros/s/AKfycbxTQJGoneHXIe4CSL4pjgP5EW7ogedrKzywydLuUFbC2P24-gb0kefO8fvOFnnZsIUH3A/exec", {
-      method: "POST",
-      body: formData,
-      mode: "no-cors"
-    })
-    .then(res => res.text())
-    .then(() => {
-      alert("Berjaya hantar!");
-      form.reset();
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Error hantar form");
-    });
+  method: "POST",
+  body: data
+})
+.then(res => res.text())
+.then(() => {
+  alert("Berjaya hantar!");
+  form.reset();
+})
+.catch(err => {
+  console.error(err);
+  alert("Error hantar form");
+});
 
   }
 
