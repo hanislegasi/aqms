@@ -194,7 +194,45 @@
               <p class="text-sm text-gray-500 mt-2 text-center">
               Ilustrasi pengurusan harta pusaka secara sistematik
               </div>
+              <div class="space-y-4 text-gray-700 leading-relaxed font-inter text-justify">
+            <p>
+              Ya! Saya ingin dapatkan Khidmat Nasihat mengenai Perancangan Harta Pusaka
+Rundingan PERCUMA bersama Perancang Harta Pusaka kami. Sila lengkapkan borang berikut:
+            </p>
             </div>
+            <form id="leadFormWasiat" class="space-y-3 mt-6">
+
+    <input type="text" name="nama" placeholder="Nama" required class="w-full p-3 border rounded-lg">
+
+<input type="email" name="email" placeholder="Email" required class="w-full p-3 border rounded-lg">
+
+<input type="text" name="telefon" placeholder="Telefon" required class="w-full p-3 border rounded-lg">
+
+<!-- PERKHIDMATAN (Dropdown) -->
+<select name="perkhidmatan" required class="w-full p-3 border rounded-lg">
+  <option value="" disabled selected>Pilih Perkhidmatan</option>
+  <option value="Wasiat">Wasiat</option>
+  <option value="Hibah">Hibah</option>
+  <option value="Faraid">Faraid</option>
+  <option value="Harta Sepencarian">Harta Sepencarian</option>
+</select>
+
+<!-- KAEDAH HUBUNGI (Dropdown) -->
+<select name="kaedah" required class="w-full p-3 border rounded-lg">
+  <option value="" disabled selected>Pilih Kaedah Dihubungi</option>
+  <option value="WhatsApp">WhatsApp</option>
+  <option value="Call">Call</option>
+  <option value="Email">Email</option>
+</select>
+
+<!-- TARIKH (Date Picker) -->
+<input type="date" name="tarikh" required class="w-full p-3 border rounded-lg">
+
+    <button type="submit" class="w-full bg-[#153638] text-white py-3 rounded-lg font-bold">
+      Hantar
+    </button>
+
+  </form>
           </div>
         `
       },
@@ -233,39 +271,6 @@
               <a href="${URL_CONFIG.wasiat}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 rounded-lg text-white font-bold transition-all shadow-md hover:shadow-lg" style="background-color: ${theme.primary}">
                 Sediakan Wasiat Online <i data-lucide="external-link" class="ml-2 w-4 h-4"></i>
               </a>
-               <form id="leadFormWasiat" class="space-y-3 mt-6">
-
-    <input type="text" name="nama" placeholder="Nama" required class="w-full p-3 border rounded-lg">
-
-<input type="email" name="email" placeholder="Email" required class="w-full p-3 border rounded-lg">
-
-<input type="text" name="telefon" placeholder="Telefon" required class="w-full p-3 border rounded-lg">
-
-<!-- PERKHIDMATAN (Dropdown) -->
-<select name="perkhidmatan" required class="w-full p-3 border rounded-lg">
-  <option value="" disabled selected>Pilih Perkhidmatan</option>
-  <option value="Wasiat">Wasiat</option>
-  <option value="Hibah">Hibah</option>
-  <option value="Faraid">Faraid</option>
-  <option value="Harta Sepencarian">Harta Sepencarian</option>
-</select>
-
-<!-- KAEDAH HUBUNGI (Dropdown) -->
-<select name="kaedah" required class="w-full p-3 border rounded-lg">
-  <option value="" disabled selected>Pilih Kaedah Dihubungi</option>
-  <option value="WhatsApp">WhatsApp</option>
-  <option value="Call">Call</option>
-  <option value="Email">Email</option>
-</select>
-
-<!-- TARIKH (Date Picker) -->
-<input type="date" name="tarikh" required class="w-full p-3 border rounded-lg">
-
-    <button type="submit" class="w-full bg-[#153638] text-white py-3 rounded-lg font-bold">
-      Hantar
-    </button>
-
-  </form>
               </div>
           </div>
         `
