@@ -73,9 +73,12 @@
             <div id="content-details" class="prose prose-lg max-w-none text-gray-600"></div>
             
             <div class="mt-10 pt-6 border-t border-gray-100">
-              <button class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95" style="background-color: #153638;">
-                Hubungi Pakar Kami <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
-              </button>
+              <button onclick="window.open('https://wa.me/60129443846?text=Saya%20nak%20tanya%20tentang%20perwarisan%20harta%20Islam', '_blank')"
+class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
+style="background-color: #153638;">
+  Dapatkan Konsultasi Percuma Anda
+  <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
+</button>
             </div>
           </div>
           
@@ -97,10 +100,10 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
         <div class="flex flex-col items-center md:items-start">
           <div class="flex items-center space-x-4 mb-6">
-            <div class="bg-white p-2 rounded-none-lg h-14 flex items-center justify-center">
+            <div class="bg-green p-2 rounded-none-lg h-14 flex items-center justify-center">
               <img src="https://i.postimg.cc/N0n5P1R7/LOGO-HANS-LEGASI-BARU-transparent.png" alt="Hans Legasi" class="h-full object-contain" />
             </div>
-            <div class="bg-white p-2 rounded-none-lg h-14 flex items-center justify-center">
+            <div class="bg-green p-2 rounded-none-lg h-14 flex items-center justify-center">
               <img src="https://i.postimg.cc/JhLc8szZ/Copy-of-A.png" alt="AQMS" class="h-full object-contain" />
             </div>
           </div>
@@ -113,10 +116,10 @@
           <h4 class="text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block" style="color: #d8ae81;">Hubungi Kami</h4>
           <ul class="space-y-4 text-sm text-gray-300">
             <li class="flex items-center justify-center md:justify-start">
-              <i data-lucide="phone" class="w-5 h-5 mr-3" style="color: #d8ae81;"></i> +60 12-345 6789
+              <i data-lucide="phone" class="w-5 h-5 mr-3" style="color: #d8ae81;"></i> +60 12-9443846
             </li>
             <li class="flex items-center justify-center md:justify-start">
-              <i data-lucide="mail" class="w-5 h-5 mr-3" style="color: #d8ae81;"></i> info@alqawtharmawaris.com.my
+              <i data-lucide="mail" class="w-5 h-5 mr-3" style="color: #d8ae81;"></i> alqawthar.hanslegasi@gmail.com
             </li>
           </ul>
         </div>
@@ -125,13 +128,13 @@
           <ul class="space-y-4 text-sm text-gray-300">
             <li class="flex items-start justify-center md:justify-start">
               <i data-lucide="map-pin" class="w-5 h-5 mr-3 mt-1" style="color: #d8ae81;"></i> 
-              <span>Pusat Komersial Mawaris,<br/>50000 Kuala Lumpur, Malaysia.</span>
+              <span>Lot 3259, Jalan Kenari Kg Bukit Kuching<br/>45800 Jeram, Selangor, Malaysia.</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="mt-12 pt-8 border-t border-white/5 text-center text-xs text-gray-500 font-bold uppercase tracking-widest">
-        &copy; <span id="current-year"></span> Al-Qawthar Mawaris Synergy. Hak Cipta Terpelihara.
+        &copy; <span id="current-year"></span> Al-Qawthar Mawaris Synergy. HCH @ Hak Cipta Terpelihara.
       </div>
     </div>
   </footer>
@@ -187,7 +190,7 @@
               </div>
               <div class="mt-8">
               <img 
-              src="https://i.postimg.cc/qqW9QDNv/Presentation-Perancangan-Harta-(1).png" 
+              src="https://i.postimg.cc/50jcJbRL/Adakah-anda-sudah-bersedia.png" 
               alt="Pengurusan Pusaka" 
               class="w-full h-auto rounded"
                />
@@ -215,6 +218,12 @@ Rundingan PERCUMA bersama Perancang Harta Pusaka kami. Sila lengkapkan borang be
   <option value="Hibah">Hibah</option>
   <option value="Faraid">Faraid</option>
   <option value="Harta Sepencarian">Harta Sepencarian</option>
+  <option value="Urus Pusaka">Urus Pusaka</option>
+  <option value="Tunai Amanah">Tunai Amanah</option>
+  <option value="Takaful">Takaful</option>
+  <option value="Unit Amanah">Unit Amanah</option>
+  <option value="Pembiayaan">Pembiayaan</option>
+  <option value="RAK">Rakan Agensi Korporat</option>
 </select>
 
 <!-- KAEDAH HUBUNGI (Dropdown) -->
@@ -269,7 +278,7 @@ Rundingan PERCUMA bersama Perancang Harta Pusaka kami. Sila lengkapkan borang be
             </div>
             <div class="mt-6">
               <a href="${URL_CONFIG.wasiat}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 rounded-lg text-white font-bold transition-all shadow-md hover:shadow-lg" style="background-color: ${theme.primary}">
-                Sediakan Wasiat Online <i data-lucide="external-link" class="ml-2 w-4 h-4"></i>
+                Sediakan Wasiat Online (eWasiat)<i data-lucide="external-link" class="ml-2 w-4 h-4"></i>
               </a>
               </div>
           </div>
@@ -403,8 +412,71 @@ Rundingan PERCUMA bersama Perancang Harta Pusaka kami. Sila lengkapkan borang be
         iconName: 'file-text',
         hero: 'Penyelesaian Holistik & Korporat',
         description: 'Melengkapi keperluan spesifik anda dengan pelbagai perkhidmatan amanah.',
-        details: `<div class="text-gray-700 font-inter">Amanah (Trust), Wakaf Korporat, dan Rundingan Syariah.</div>`
-      }
+        details: 
+             `
+    <div class="space-y-4 text-gray-700 text-justify">
+
+      <p>
+        Kami menyediakan penyelesaian menyeluruh bagi memenuhi keperluan spesifik individu dan organisasi — daripada perancangan harta semasa hidup hingga pengurusan amanah selepas ketiadaan anda.
+
+Antara perkhidmatan yang ditawarkan:
+      </p>
+
+      <ul class="space-y-3">
+
+        <li class="flex items-start space-x-2">
+          <span class="mt-1 flex-shrink-0">&bull;</span>
+          <span>
+            <strong>Tunai Amanah:</strong>
+            Penyimpanan dan pengagihan dana secara terancang mengikut hasrat anda.
+
+Berfungsi sebagai jaringan keselamatan kewangan, di mana wang tunai ditempatkan dalam amanah untuk penerima yang dinamakan (al-Mauhub Lahu). Dana ini boleh digunakan bagi menampung kos seperti pengurusan jenazah, sara hidup, pendidikan dan penyelesaian hutang selepas kematian pemberi (Mudi’).
+
+Dana ini juga tidak tertakluk kepada faraid dan boleh terus diagihkan kepada penerima seperti pasangan atau anak-anak dengan lebih cepat dan teratur.
+          </span>
+        </li>
+
+        <li class="flex items-start space-x-2">
+          <span class="mt-1 flex-shrink-0">&bull;</span>
+          <span>
+            <strong>Takaful:</strong>
+            Perlindungan kewangan patuh syariah bagi memastikan kesinambungan kewangan keluarga. Manfaat boleh dirancang untuk tujuan pewarisan, perlindungan pendapatan serta penyelesaian komitmen selepas ketiadaan anda.
+          </span>
+        </li>
+
+        <li class="flex items-start space-x-2">
+          <span class="mt-1 flex-shrink-0">&bull;</span>
+          <span>
+            <strong>Unit Amanah:</strong>
+           Pelaburan strategik untuk pertumbuhan aset jangka panjang. Sesuai dijadikan dana terkumpul bagi tujuan pewarisan dan kestabilan kewangan generasi seterusnya.
+          </span>
+        </li>
+
+        <li class="flex items-start space-x-2">
+          <span class="mt-1 flex-shrink-0">&bull;</span>
+          <span>
+            <strong>Pembiayaan:</strong>
+           Penyelesaian pembiayaan untuk menyusun, mengembangkan dan mengoptimumkan kedudukan kewangan anda sebagai persediaan ketiadaan anda nanti. Kami boleh membantu anda dalam urusan LPPSA, Pembiayaan Peribadi, Penyatuan Hutang dan Pembiayaan Semula.
+          </span>
+        </li>
+
+        <li class="flex items-start space-x-2">
+          <span class="mt-1 flex-shrink-0">&bull;</span>
+          <span>
+            <strong>Rakan Agensi & Korporat:</strong>
+           Kami membuka peluang kerjasama strategik bersama agensi, organisasi, institusi dan syarikat korporat dalam menyediakan solusi perancangan dan pengurusan harta secara patuh syariah.
+
+Melalui kolaborasi ini, kami membantu menyediakan perkhidmatan perwarisan Islam yang komprehensif kepada staf dan komuniti anda, termasuk sesi penerangan, konsultasi serta penyediaan dokumentasi yang berkaitan.
+
+Pendekatan ini bukan sahaja meningkatkan kesedaran dan literasi kewarisan, malah memberi nilai tambah kepada kebajikan serta kesejahteraan jangka panjang warga organisasi.
+          </span>
+        </li>
+
+      </ul>
+
+    </div>
+  `
+}
     };
 
     
@@ -463,28 +535,13 @@ Rundingan PERCUMA bersama Perancang Harta Pusaka kami. Sila lengkapkan borang be
       document.getElementById('hero-desc').innerText = currentContent.description;
       
       const heroMedia = document.getElementById('hero-media');
-      if (activeTab === 'utama') {
-        heroMedia.innerHTML = `
-          <div class="flex justify-center mb-8">
-            <div class="bg-white/5 p-4 rounded-2xl backdrop-blur-sm border border-white/10 shadow-2xl">
-              <img 
-                src="${LOGO_URLS.main}" 
-                alt="Main Logo" 
-                class="h-20 md:h-28 w-auto object-contain"
-                onerror="this.src='https://via.placeholder.com/200x80?text=LOGO+UTAMA'"
-              />
-            </div>
+      heroMedia.innerHTML = `
+        <div class="flex justify-center mb-6">
+          <div class="p-4 rounded-full bg-white/5 border border-white/10 shadow-lg text-[#d8ae81] scale-150 transform transition-transform">
+            <i data-lucide="${currentContent.iconName}" class="w-6 h-6"></i>
           </div>
-        `;
-      } else {
-        heroMedia.innerHTML = `
-          <div class="flex justify-center mb-6">
-            <div class="p-4 rounded-full bg-white/5 border border-white/10 shadow-lg text-[#d8ae81] scale-150 transform transition-transform">
-              <i data-lucide="${currentContent.iconName}" class="w-6 h-6"></i>
-            </div>
-          </div>
-        `;
-      }
+        </div>
+      `;
 
       // 4. Render Main Details & Sidebar
       document.getElementById('content-details').innerHTML = currentContent.details;
