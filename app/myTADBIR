@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myTADBIR - Perancangan Harta Islam</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Import Map -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+          "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+        }
+      }
+    </script>
+
+    <style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50">
+    
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useState, useMemo } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { 
+          Landmark, ShieldCheck, HeartHandshake, BookOpen, 
+          TrendingUp, Calculator, PieChart, Wallet, User, 
+          AlertTriangle, Heart, Lightbulb, Clock, FileText, ArrowRight, Printer, MessageCircle
+        } from 'lucide-react';
+
+        // --- Komponen Bantuan (UI) ---
+        const Card = ({ children, className = '' }) => (
+          <div className={`bg-white rounded-xl shadow-sm border border-slate-200 p-6 ${className}`}>
+            {children}
+          </div>
+        );
+
+        const Input = ({ label, value, onChange, type = 'number', prefix = '', suffix = '', min = 0, max }) => (
+          <div className="flex flex-col mb-4">
+            <label className="text-sm font-semibold text-slate-700 mb-1">{label}</label>
+            <div className="relative flex items-center">
+              {prefix && <span className="absolute left-3 text-slate-500">{prefix}</span>}
+              <input
+                type={type}
+                value={value}
+                onChange={onChange}
+                min={min}
+                max={max}
+                className={`w-full border border-slate-300 rounded-lg py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all ${prefix ? 'pl-9' : 'pl-3'} ${suffix ? 'pr-8' : 'pr-3'}`}
+              />
+              {suffix && <span className="absolute right-3 text-slate-500">{suffix}</span>}
+            </div>
+          </div>
+        );
+
+        const SectionHeader = ({ title, icon: Icon, description }) => (
+          <div className="mb-6 border-b border-emerald-100 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg">
+                <Icon size={24} />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-slate-800">{title}</h2>
+                <p className="text-sm text-slate-500">{description}</p>
+              </div>
+            </div>
+          </div>
+        );
+
+        // --- Komponen Utama ---
+        function App() {
+          const [activeTab, setActiveTab] = useState(1);
+          const [showReport, setShowReport] = useState(false);
+
+          // === STATE PENGURUSAN DATA ===
+          const [userGender, setUserGender] = useState('lelaki');
+          const [age, setAge] = useState(30);
+          const [annualIncome, setAnnualIncome] = useState(60000);
+          const [currentExpenses, setCurrentExpenses] = useState(3000);
+          const [childrenData, setChildrenData] = useState([{ id: 1, age: 1, gender: 'lelaki' }]);
+          
+          const [asb, setAsb] = useState(10000);
+          const [th, setTh] = useState(10000);
+          const [unitTrust, setUnitTrust] = useState(5000);
+          const [tunai, setTunai] = useState(20000);
+          const [kwsp, setKwsp] = useState(80000);
+          const [emas, setEmas] = useState(5000);
+          
+          const [rumahValue, setRumahValue] = useState(350000);
+          const [rumahBaki, setRumahBaki] = useState(300000);
+          const [rumahTempoh, setRumahTempoh] = useState(25);
+          
+          const [keretaValue, setKeretaValue] = useState(60000);
+          const [keretaBaki, setKeretaBaki] = useState(45000);
+          const [keretaTempoh, setKeretaTempoh] = useState(7);
+          
+          const [personalBaki, setPersonalBaki] = useState(15000);
+          const [personalTempoh, setPersonalTempoh] = useState(5);
+
+          const [retireAge, setRetireAge] = useState(60);
+          const [lifeExpectancy, setLifeExpectancy] = useState(80);
+          const [inflationRate, setInflationRate] = useState(3);
+          const [assetReturnRate, setAssetReturnRate] = useState(5);
+          const [uniAge, setUniAge] = useState(18);
+          const [currentEduCost, setCurrentEduCost] = useState(50000);
+
+          const [funeralCost, setFuneralCost] = useState(2000);
+          const [sepencarianPercent, setSepencarianPercent] = useState(50); 
+          const [wasiatPercent, setWasiatPercent] = useState(0); 
+          const [hasSpouse, setHasSpouse] = useState(true);
+          const [parentsAlive, setParentsAlive] = useState(2); 
+
+          const [currentTakaful, setCurrentTakaful] = useState(100000);
+
+          // === PENGIRAAN AUTOMATIK ===
+          const numSons = childrenData.filter(c => c.gender === 'lelaki').length;
+          const numDaughters = childrenData.filter(c => c.gender === 'perempuan').length;
+          const spouseGender = userGender === 'lelaki' ? 'isteri' : 'suami';
+
+          const totalLiquidAssets = asb + th + unitTrust + tunai + kwsp + emas;
+          const totalPhysicalAssets = rumahValue + keretaValue;
+          const totalDebts = rumahBaki + keretaBaki + personalBaki;
+          const currentNetWorth = (totalLiquidAssets + totalPhysicalAssets) - totalDebts;
+
+          const yearsToRetire = Math.max(0, retireAge - age);
+          const yearsInRetirement = Math.max(0, lifeExpectancy - retireAge);
+          
+          const futureMonthlyExpenses = currentExpenses * Math.pow(1 + (inflationRate / 100), yearsToRetire);
+          const retirementCorpusNeeded = futureMonthlyExpenses * 12 * yearsInRetirement;
+          
+          const futureEduCostTotal = childrenData.reduce((total, child) => {
+            const yearsToUni = Math.max(0, uniAge - child.age);
+            return total + (currentEduCost * Math.pow(1 + (inflationRate / 100), yearsToUni));
+          }, 0);
+
+          const futureLiquidAssets = totalLiquidAssets * Math.pow(1 + (assetReturnRate / 100), yearsToRetire);
+          
+          const unjuranRumahBaki = yearsToRetire >= rumahTempoh ? 0 : Math.max(0, rumahBaki - (rumahBaki / rumahTempoh) * yearsToRetire);
+          const unjuranKeretaBaki = yearsToRetire >= keretaTempoh ? 0 : Math.max(0, keretaBaki - (keretaBaki / keretaTempoh) * yearsToRetire);
+          const unjuranPersonalBaki = yearsToRetire >= personalTempoh ? 0 : Math.max(0, personalBaki - (personalBaki / personalTempoh) * yearsToRetire);
+          const unjuranTotalDebts = unjuranRumahBaki + unjuranKeretaBaki + unjuranPersonalBaki;
+
+          const bakiUntukBersara = Math.max(0, futureLiquidAssets - unjuranTotalDebts - futureEduCostTotal);
+          const yearlyRetirementExpense = futureMonthlyExpenses * 12;
+          const yearsItWillLast = yearlyRetirementExpense > 0 ? (bakiUntukBersara / yearlyRetirementExpense) : 0;
+          const exhaustAge = retireAge + yearsItWillLast;
+
+          // --- PENGIRAAN SOLUSI PERSARAAN ---
+          const totalFutureNeeds = unjuranTotalDebts + futureEduCostTotal + retirementCorpusNeeded;
+          const retirementShortfall = Math.max(0, totalFutureNeeds - futureLiquidAssets);
+          // Opsyen A: Extra savings needed monthly (Simplified PMT)
+          const extraSavingsNeeded = yearsToRetire > 0 ? (retirementShortfall / (yearsToRetire * 12)) : 0;
+          // Opsyen C: Downsize lifestyle
+          const sustainableMonthlyExpense = yearsInRetirement > 0 ? (bakiUntukBersara / (yearsInRetirement * 12)) : 0;
+
+          // --- PENGIRAAN FARAID & HARTA ---
+          const totalZakatable = asb + th + unitTrust + tunai + emas; 
+          const zakatPayable = totalZakatable * 0.025;
+
+          const grossEstate = totalLiquidAssets + totalPhysicalAssets;
+          const estateAfterFuneral = grossEstate - funeralCost;
+          
+          const sepencarianAmount = hasSpouse ? (totalPhysicalAssets * (sepencarianPercent / 100)) : 0;
+          
+          const estateAfterSepencarian = estateAfterFuneral - sepencarianAmount;
+          const estateAfterDebts = estateAfterSepencarian - totalDebts - zakatPayable; 
+          const actualNetEstate = Math.max(0, estateAfterDebts);
+          
+          const wasiatAmount = actualNetEstate * (Math.min(wasiatPercent, 33.33) / 100);
+          const faraidPool = actualNetEstate - wasiatAmount;
+
+          const calculateFaraid = () => {
+            let distribution = [];
+            let pool = faraidPool;
+            if (pool <= 0) return [];
+
+            let spouseShare = 0; let motherShare = 0; let fatherShare = 0; let daughtersShare = 0;
+            
+            if (hasSpouse) {
+              if (spouseGender === 'isteri') {
+                spouseShare = (numSons > 0 || numDaughters > 0) ? 1/8 : 1/4;
+                distribution.push({ name: 'Isteri', amount: pool * spouseShare, percent: spouseShare * 100, isSpouse: true });
+              } else {
+                spouseShare = (numSons > 0 || numDaughters > 0) ? 1/4 : 1/2;
+                distribution.push({ name: 'Suami', amount: pool * spouseShare, percent: spouseShare * 100, isSpouse: true });
+              }
+            }
+
+            if (parentsAlive > 0) {
+              let parentShareCalc = (numSons > 0 || numDaughters > 0) ? 1/6 : 1/3;
+              if (parentsAlive === 2 || parentsAlive === 1) {
+                  motherShare = parentShareCalc;
+                  const parentName = parentsAlive === 1 ? 'Ibu/Bapa' : 'Ibu';
+                  distribution.push({ name: parentName, amount: pool * motherShare, percent: motherShare * 100 });
+              }
+              if (parentsAlive === 2) {
+                  fatherShare = (numSons > 0 || numDaughters > 0) ? 1/6 : 0;
+                  distribution.push({ name: 'Bapa', amount: pool * fatherShare, percent: fatherShare * 100 });
+              }
+            }
+
+            if (numSons === 0 && numDaughters > 0) {
+              daughtersShare = numDaughters === 1 ? 1/2 : 2/3;
+              distribution.push({ name: `Anak Perempuan (${numDaughters} orang)`, amount: pool * daughtersShare, percent: daughtersShare * 100 });
+            }
+
+            let allocatedFraction = spouseShare + motherShare + fatherShare + daughtersShare;
+            
+            if (allocatedFraction > 1) {
+              distribution = distribution.map(d => {
+                let newFraction = (d.percent / 100) / allocatedFraction;
+                return { ...d, amount: pool * newFraction, percent: newFraction * 100 };
+              });
+              allocatedFraction = 1;
+            }
+
+            let remainingFraction = 1 - allocatedFraction;
+            let remainingAmount = pool * remainingFraction;
+
+            if (remainingFraction > 0.0001) {
+              if (numSons > 0) {
+                const totalParts = (numSons * 2) + numDaughters;
+                const valuePerPart = remainingAmount / totalParts;
+                distribution.push({ name: `Anak Lelaki (${numSons} orang)`, amount: valuePerPart * 2 * numSons, percent: (valuePerPart * 2 * numSons / pool) * 100 });
+                if (numDaughters > 0) {
+                  distribution.push({ name: `Anak Perempuan (${numDaughters} orang)`, amount: valuePerPart * numDaughters, percent: (valuePerPart * numDaughters / pool) * 100 });
+                }
+              } else if (parentsAlive === 2) {
+                let fatherIndex = distribution.findIndex(d => d.name === 'Bapa');
+                if(fatherIndex !== -1) {
+                    distribution[fatherIndex].amount += remainingAmount;
+                    distribution[fatherIndex].percent += (remainingFraction * 100);
+                    distribution[fatherIndex].name = 'Bapa (Fardu + Asabah)';
+                } else {
+                    distribution.push({ name: 'Bapa (Asabah)', amount: remainingAmount, percent: remainingFraction * 100 });
+                }
+              } else {
+                distribution.push({ name: 'Baitulmal / Waris Lain (Adik Beradik)', amount: remainingAmount, percent: remainingFraction * 100 });
+              }
+            }
+
+            return distribution;
+          };
+
+          const faraidDistribution = calculateFaraid();
+
+          const spouseFaraidObj = faraidDistribution.find(d => d.isSpouse);
+          const spouseFaraidAmount = spouseFaraidObj ? spouseFaraidObj.amount : 0;
+          
+          const totalSpouseSurvivalFund = sepencarianAmount + spouseFaraidAmount + currentTakaful;
+          const familySurvivalNeeds = currentExpenses * 12 * 10;
+          const incomeProtectionGap = Math.max(0, familySurvivalNeeds - totalSpouseSurvivalFund);
+
+          const tabs = [
+            { id: 1, title: 'Profil', icon: User, desc: 'Diri & Keluarga' },
+            { id: 2, title: 'Harta Semasa', icon: Landmark, desc: 'Aset & Liabiliti' },
+            { id: 3, title: 'Unjuran Bersara', icon: TrendingUp, desc: 'Pendidikan & Pencen' },
+            { id: 4, title: 'Penyucian', icon: HeartHandshake, desc: 'Zakat Kehidupan' },
+            { id: 5, title: 'Senario Mati', icon: Calculator, desc: 'Pusaka & Faraid' },
+            { id: 6, title: 'Pelindung', icon: ShieldCheck, desc: 'Analisis Hibah/Waris' },
+          ];
+
+          const formatRM = (val) => new Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR', maximumFractionDigits: 0 }).format(val);
+
+          // Fungsi untuk tukar tab & scroll ke atas
+          const handleNextTab = () => {
+            if (activeTab < 6) {
+              setActiveTab(activeTab + 1);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          };
+
+          const handlePrevTab = () => {
+            if (activeTab > 1) {
+              setActiveTab(activeTab - 1);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          };
+
+          if (showReport) {
+            return (
+              <div className="min-h-screen bg-white text-slate-800 p-8 md:p-12 font-sans max-w-4xl mx-auto">
+                <div className="print:hidden flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-slate-100 p-4 rounded-xl">
+                  <button onClick={() => setShowReport(false)} className="px-6 py-2 bg-slate-300 hover:bg-slate-400 text-slate-800 rounded-lg font-bold transition-colors w-full md:w-auto">
+                    Kembali Ke Aplikasi
+                  </button>
+                  <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+                    <button onClick={() => window.print()} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold flex justify-center items-center gap-2 transition-colors">
+                      <Printer size={18} /> Simpan / Cetak PDF
+                    </button>
+                    <a href="https://wa.me/60129443846?text=Salam,%20saya%20ingin%20berbincang%20berkenaan%20laporan%20myTADBIR%20saya." target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-bold flex justify-center items-center gap-2 transition-colors">
+                      <MessageCircle size={18} /> WhatsApp Perunding
+                    </a>
+                  </div>
+                </div>
+
+                <div className="border-b-2 border-emerald-800 pb-6 mb-8 text-center">
+                  <h1 className="text-3xl font-black text-emerald-800 flex items-center justify-center gap-3 mb-2">
+                    <Landmark size={32} className="text-amber-500" /> myTADBIR
+                  </h1>
+                  <p className="text-lg text-slate-600 font-semibold">Laporan Ringkasan Perancangan Kewangan & Harta Islam</p>
+                </div>
+
+                <div className="space-y-8">
+                  <section>
+                    <h2 className="text-xl font-bold text-slate-800 border-b pb-2 mb-4">1. Profil & Kedudukan Kewangan</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div><span className="text-slate-500 block text-xs">Umur / Jantina:</span> <span className="font-semibold text-base">{age} Tahun ({userGender})</span></div>
+                      <div><span className="text-slate-500 block text-xs">Tanggungan Anak:</span> <span className="font-semibold text-base">{childrenData.length} Orang</span></div>
+                      <div><span className="text-slate-500 block text-xs">Pendapatan Tahunan:</span> <span className="font-semibold text-base">{formatRM(annualIncome)}</span></div>
+                      <div><span className="text-slate-500 block text-xs">Perbelanjaan Bulanan:</span> <span className="font-semibold text-base">{formatRM(currentExpenses)}</span></div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <h2 className="text-xl font-bold text-slate-800 border-b pb-2 mb-4">2. Ringkasan Harta & Hutang (Net Worth)</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center md:text-left">
+                        <p className="text-slate-500 mb-1">Jumlah Keseluruhan Aset</p>
+                        <p className="font-bold text-xl text-emerald-600">{formatRM(totalLiquidAssets + totalPhysicalAssets)}</p>
+                      </div>
+                      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center md:text-left">
+                        <p className="text-slate-500 mb-1">Jumlah Hutang & Liabiliti</p>
+                        <p className="font-bold text-xl text-red-600">{formatRM(totalDebts)}</p>
+                      </div>
+                      <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200 text-center md:text-left">
+                        <p className="text-emerald-800 font-semibold mb-1">Nilai Harta Bersih</p>
+                        <p className="font-black text-2xl text-emerald-700">{formatRM(currentNetWorth)}</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <h2 className="text-xl font-bold text-slate-800 border-b pb-2 mb-4">3. Unjuran Persaraan & Penyucian Harta</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                      <div className="bg-white border border-slate-200 rounded-lg p-4">
+                        <h3 className="font-bold text-slate-700 mb-3 border-b pb-2">Status Dana Persaraan</h3>
+                        <ul className="space-y-3">
+                          <li className="flex justify-between"><span className="text-slate-500">Umur Sasaran Bersara:</span> <span className="font-semibold">{retireAge} Tahun</span></li>
+                          <li className="flex justify-between"><span className="text-slate-500">Ketahanan Dana:</span> <span className="font-semibold">{yearsItWillLast.toFixed(1)} Tahun</span></li>
+                          <li className="flex justify-between"><span className="text-slate-500">Defisit Dana (Kekurangan):</span> <span className={`font-bold ${retirementShortfall > 0 ? 'text-red-600' : 'text-emerald-600'}`}>{retirementShortfall > 0 ? formatRM(retirementShortfall) : 'Tiada'}</span></li>
+                        </ul>
+                      </div>
+                      <div className="bg-white border border-slate-200 rounded-lg p-4">
+                        <h3 className="font-bold text-slate-700 mb-3 border-b pb-2">Tanggungjawab Zakat Semasa</h3>
+                        <ul className="space-y-3">
+                          <li className="flex justify-between"><span className="text-slate-500">Harta Tunai Layak Zakat:</span> <span className="font-semibold">{formatRM(totalZakatable)}</span></li>
+                          <li className="flex justify-between"><span className="text-slate-500">Zakat Wajib Ditunaikan (2.5%):</span> <span className="font-bold text-emerald-600">{formatRM(zakatPayable)}</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <h2 className="text-xl font-bold text-slate-800 border-b pb-2 mb-4">4. Analisis Pusaka, Faraid & Pelindungan Waris</h2>
+                    
+                    <div className="bg-amber-50 p-5 rounded-lg border border-amber-200 text-sm mb-5">
+                      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-2">
+                        <span className="text-amber-900 font-bold text-base">Jurang Penggantian Pendapatan Waris (10 Tahun):</span>
+                        <span className={`font-black text-xl ${incomeProtectionGap > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+                          {incomeProtectionGap > 0 ? formatRM(incomeProtectionGap) + " (Defisit)" : "Mencukupi"}
+                        </span>
+                      </div>
+                      <p className="text-slate-600 text-xs mt-1">*(Dikira berdasarkan keperluan belanja keluarga untuk 10 tahun, ditolak dengan Tuntutan Harta Sepencarian, Faraid Pasangan & Pampasan Takaful Sedia Ada)*</p>
+                    </div>
+                    
+                    <div className="text-sm">
+                      <p className="font-bold text-slate-800 mb-3">Tindakan Mitigasi & Pengurusan Harta Islam Yang Disyorkan:</p>
+                      <ul className="list-disc pl-5 space-y-2 text-slate-700">
+                        {incomeProtectionGap > 0 && <li>Sediakan dana pantas melalui pampasan <strong className="text-slate-900">Hibah Takaful</strong> bernilai minimum <strong>RM{formatRM(incomeProtectionGap)}</strong> untuk waris anda segera.</li>}
+                        {totalLiquidAssets > 0 && <li>Wujudkan <strong className="text-slate-900">Amanah Tunai (Cash Trust)</strong> bagi mengelakkan akaun bank dibekukan, dan memudahkan waris mengeluarkan tunai pantas.</li>}
+                        {hasSpouse && <li>Daftarkan <strong className="text-slate-900">Deklarasi Harta Sepencarian</strong> secara rasmi untuk menjamin pemilikan ({sepencarianPercent}%) aset fizikal oleh isteri/suami anda.</li>}
+                        <li>Sediakan <strong>Wasiat Pentadbir</strong> untuk memastikan proses penyelesaian hutang tertunggak (RM{formatRM(totalDebts)}) berjalan lancar.</li>
+                      </ul>
+                    </div>
+                  </section>
+                </div>
+
+                <div className="mt-12 pt-8 border-t border-slate-200 text-center">
+                  <p className="text-sm font-semibold text-slate-800 mb-2">Hubungi Perunding Kewangan Anda</p>
+                  <p className="text-xs text-slate-500 mb-6 print:mb-2 max-w-2xl mx-auto">Laporan ini dijana oleh myTADBIR dan merupakan anggaran asas kedudukan perancangan harta anda. Sila berhubung dengan perunding yang sah untuk rundingan yang lebih komprehensif.</p>
+                  
+                  <a href="https://wa.me/60129443846?text=Salam,%20saya%20ingin%20berbincang%20berkenaan%20laporan%20myTADBIR%20saya." target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-green-500 hover:bg-green-600 transition-colors text-white font-bold rounded-full shadow-lg text-base decoration-transparent print:hidden">
+                    <MessageCircle size={22} /> WhatsApp Sekarang: 012-9443846
+                  </a>
+                  
+                  <div className="hidden print:block text-slate-800 font-bold text-lg mt-4 p-4 border-2 border-slate-800 rounded-lg inline-block">
+                    No. Telefon Perunding: 012-9443846
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div className="min-h-screen bg-slate-50 font-sans pb-12">
+              <header className="bg-emerald-800 text-white p-6 md:p-10 shadow-md">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div>
+                    <h1 className="text-3xl font-bold flex items-center gap-3">
+                      <Landmark size={32} className="text-amber-400" />
+                      myTADBIR
+                    </h1>
+                    <p className="text-emerald-100 mt-2 text-lg">Perancangan Persaraan Dunia Akhirat Anda</p>
+                  </div>
+                  <div className="bg-emerald-900/50 p-4 rounded-xl border border-emerald-700 backdrop-blur-sm text-right">
+                    <p className="text-emerald-200 text-sm">Nilai Harta Bersih Semasa</p>
+                    <p className="text-2xl font-bold text-amber-400">{formatRM(currentNetWorth)}</p>
+                  </div>
+                </div>
+              </header>
+
+              <main className="max-w-6xl mx-auto mt-8 px-4">
+                <div className="flex overflow-x-auto gap-3 mb-8 pb-4 snap-x hide-scrollbar">
+                  {tabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex-none w-[160px] md:flex-1 md:w-auto flex flex-col items-center justify-center gap-2 p-4 rounded-xl font-medium transition-all snap-center ${
+                        activeTab === tab.id 
+                          ? 'bg-emerald-600 text-white shadow-lg scale-105 transform border-emerald-500' 
+                          : 'bg-white text-slate-600 hover:bg-emerald-50 border border-slate-200'
+                      }`}
+                    >
+                      <tab.icon size={28} className={activeTab === tab.id ? 'text-amber-300' : 'text-emerald-600'} />
+                      <div className="text-center">
+                        <div className="font-bold text-sm md:text-base leading-tight">{tab.title}</div>
+                        <div className="text-xs opacity-80 mt-1 hidden md:block">{tab.desc}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="space-y-6">
+                  {/* TAHAP 1: PROFIL SEMASA */}
+                  {activeTab === 1 && (
+                    <div className="space-y-6 animate-fadeIn">
+                      <Card>
+                        <SectionHeader title="Profil Diri & Cashflow" icon={User} description="Maklumat asas untuk unjuran Faraid, Hibah dan Persaraan." />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div className="space-y-4">
+                            <h3 className="font-semibold text-slate-700 border-b pb-2">Maklumat Anda</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <label className="text-sm font-semibold text-slate-700 block mb-2">Jantina</label>
+                                <select 
+                                  className="w-full border border-slate-300 rounded-lg py-2 px-3 focus:ring-emerald-500 bg-white"
+                                  value={userGender}
+                                  onChange={(e) => setUserGender(e.target.value)}
+                                >
+                                  <option value="lelaki">Lelaki</option>
+                                  <option value="perempuan">Perempuan</option>
+                                </select>
+                              </div>
+                              <Input label="Umur Semasa" value={age} onChange={e => setAge(Number(e.target.value))} />
+                            </div>
+                            <Input label="Pendapatan Tahunan" value={annualIncome} onChange={e => setAnnualIncome(Number(e.target.value))} prefix="RM" />
+                            <Input label="Perbelanjaan Asas Bulanan" value={currentExpenses} onChange={e => setCurrentExpenses(Number(e.target.value))} prefix="RM" />
+                          </div>
+
+                          <div className="space-y-4">
+                            <div className="flex justify-between items-center border-b pb-2">
+                              <h3 className="font-semibold text-slate-700">Senarai Anak ({childrenData.length})</h3>
+                            </div>
+                            {childrenData.map((child, index) => (
+                              <div key={child.id} className="flex items-end gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <div className="flex-1">
+                                  <Input label={`Umur Anak ${index + 1}`} value={child.age} onChange={e => {
+                                    const newAge = Number(e.target.value);
+                                    setChildrenData(childrenData.map(c => c.id === child.id ? { ...c, age: newAge } : c));
+                                  }} />
+                                </div>
+                                <div className="flex-1">
+                                  <label className="text-sm font-semibold text-slate-700 block mb-1">Jantina</label>
+                                  <select 
+                                    className="w-full border border-slate-300 rounded-lg py-2 px-3 focus:ring-emerald-500 mb-4 bg-white"
+                                    value={child.gender}
+                                    onChange={(e) => setChildrenData(childrenData.map(c => c.id === child.id ? { ...c, gender: e.target.value } : c))}
+                                  >
+                                    <option value="lelaki">Lelaki</option>
+                                    <option value="perempuan">Perempuan</option>
+                                  </select>
+                                </div>
+                                <button onClick={() => setChildrenData(childrenData.filter(c => c.id !== child.id))} className="mb-4 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg border border-red-200 font-bold">X</button>
+                              </div>
+                            ))}
+                            <button onClick={() => setChildrenData([...childrenData, { id: Date.now(), age: 1, gender: 'lelaki' }])} className="w-full py-2 border-2 border-dashed border-emerald-300 text-emerald-600 rounded-lg hover:bg-emerald-50 font-medium text-sm transition-colors">
+                              + Tambah Anak
+                            </button>
+                          </div>
+                        </div>
+                      </Card>
+                    </div>
+                  )}
+
+                  {/* TAHAP 2: HARTA & HUTANG */}
+                  {activeTab === 2 && (
+                    <div className="space-y-6 animate-fadeIn">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Card>
+                          <SectionHeader title="Aset (Harta Semasa)" icon={Landmark} description="Semua jenis simpanan dan harta fizikal." />
+                          <div className="grid grid-cols-2 gap-4">
+                            <Input label="Amanah Saham (ASB)" value={asb} onChange={e => setAsb(Number(e.target.value))} prefix="RM" />
+                            <Input label="Tabung Haji (TH)" value={th} onChange={e => setTh(Number(e.target.value))} prefix="RM" />
+                            <Input label="Unit Trust / Saham" value={unitTrust} onChange={e => setUnitTrust(Number(e.target.value))} prefix="RM" />
+                            <Input label="Tunai di Bank" value={tunai} onChange={e => setTunai(Number(e.target.value))} prefix="RM" />
+                            <Input label="KWSP" value={kwsp} onChange={e => setKwsp(Number(e.target.value))} prefix="RM" />
+                            <Input label="Emas Semasa" value={emas} onChange={e => setEmas(Number(e.target.value))} prefix="RM" />
+                          </div>
+                          <div className="border-t pt-4 mt-2">
+                            <h4 className="text-sm font-semibold text-slate-700 mb-3">Nilai Harta Fizikal (Anggaran Jualan)</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                              <Input label="Nilai Rumah" value={rumahValue} onChange={e => setRumahValue(Number(e.target.value))} prefix="RM" />
+                              <Input label="Nilai Kereta" value={keretaValue} onChange={e => setKeretaValue(Number(e.target.value))} prefix="RM" />
+                            </div>
+                          </div>
+                        </Card>
+
+                        <Card>
+                          <SectionHeader title="Liabiliti (Komitmen Hutang)" icon={TrendingUp} description="Hutang yang mengurangkan nilai harta bersih." />
+                          <div className="space-y-4">
+                            <div className="p-4 border border-slate-200 rounded-lg bg-slate-50">
+                              <h4 className="font-semibold text-slate-700 mb-3">Pinjaman Perumahan</h4>
+                              <div className="grid grid-cols-2 gap-4">
+                                <Input label="Baki Pinjaman" value={rumahBaki} onChange={e => setRumahBaki(Number(e.target.value))} prefix="RM" />
+                                <Input label="Baki Tempoh (Tahun)" value={rumahTempoh} onChange={e => setRumahTempoh(Number(e.target.value))} />
+                              </div>
+                            </div>
+                            <div className="p-4 border border-slate-200 rounded-lg bg-slate-50">
+                              <h4 className="font-semibold text-slate-700 mb-3">Pinjaman Kenderaan</h4>
+                              <div className="grid grid-cols-2 gap-4">
+                                <Input label="Baki Pinjaman" value={keretaBaki} onChange={e => setKeretaBaki(Number(e.target.value))} prefix="RM" />
+                                <Input label="Baki Tempoh (Tahun)" value={keretaTempoh} onChange={e => setKeretaTempoh(Number(e.target.value))} />
+                              </div>
+                            </div>
+                            <div className="p-4 border border-slate-200 rounded-lg bg-slate-50">
+                              <h4 className="font-semibold text-slate-700 mb-3">Pembiayaan Peribadi</h4>
+                              <div className="grid grid-cols-2 gap-4">
+                                <Input label="Baki Pinjaman" value={personalBaki} onChange={e => setPersonalBaki(Number(e.target.value))} prefix="RM" />
+                                <Input label="Baki Tempoh (Tahun)" value={personalTempoh} onChange={e => setPersonalTempoh(Number(e.target.value))} />
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+
+                      <Card className="bg-emerald-50 border-emerald-200">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <h3 className="text-xl font-bold text-emerald-800">Harta Bersih Semasa</h3>
+                            <p className="text-sm text-emerald-600">Jumlah Aset ({formatRM(totalLiquidAssets + totalPhysicalAssets)}) - Jumlah Hutang ({formatRM(totalDebts)})</p>
+                          </div>
+                          <div className="text-3xl font-extrabold text-emerald-700">{formatRM(currentNetWorth)}</div>
+                        </div>
+                      </Card>
+                    </div>
+                  )}
+
+                  {/* TAHAP 3: UNJURAN MASA DEPAN & SOLUSI */}
+                  {activeTab === 3 && (
+                    <div className="space-y-6 animate-fadeIn">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Card>
+                          <SectionHeader title="Matlamat Persaraan" icon={Wallet} description="Tetapan sasaran masa depan anda." />
+                          <div className="grid grid-cols-2 gap-4">
+                            <Input label="Umur Bersara" value={retireAge} onChange={e => setRetireAge(Number(e.target.value))} />
+                            <Input label="Jangka Hayat" value={lifeExpectancy} onChange={e => setLifeExpectancy(Number(e.target.value))} />
+                            <Input label="Kadar Inflasi (%)" value={inflationRate} onChange={e => setInflationRate(Number(e.target.value))} />
+                            <Input label="Kadar Pulangan Aset (%)" value={assetReturnRate} onChange={e => setAssetReturnRate(Number(e.target.value))} />
+                          </div>
+                        </Card>
+
+                        <Card>
+                          <SectionHeader title="Dana Pendidikan Anak" icon={BookOpen} description="Anggaran kos pendidikan pada masa depan." />
+                          <div className="grid grid-cols-2 gap-4">
+                            <Input label="Umur Masuk Universiti" value={uniAge} onChange={e => setUniAge(Number(e.target.value))} />
+                            <Input label="Kos Semasa (Per Anak)" value={currentEduCost} onChange={e => setCurrentEduCost(Number(e.target.value))} prefix="RM" />
+                          </div>
+                          <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <div className="flex justify-between items-center">
+                              <span className="text-slate-700 font-semibold">Total Kos Pendidikan (FV):</span>
+                              <span className="font-bold text-emerald-600 text-xl">{formatRM(futureEduCostTotal)}</span>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+
+                      <Card className="bg-blue-50 border-blue-200">
+                        <SectionHeader title="Ketahanan Dana Masa Depan (Ketika Bersara)" icon={TrendingUp} description="Adakah wang anda mampu bertahan dari umur bersara sehingga umur jangka hayat?" />
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                          <div className="space-y-3">
+                            <div className="flex justify-between items-center text-sm border-b border-blue-200 pb-2">
+                              <span className="text-blue-800">Unjuran Aset Cair Terkumpul (Umur {retireAge}):</span>
+                              <span className="font-semibold text-blue-900">{formatRM(futureLiquidAssets)}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm border-b border-blue-200 pb-2 text-red-600">
+                              <span>Tolak: Unjuran Baki Hutang (Gagal Selesai):</span>
+                              <span className="font-semibold">- {formatRM(unjuranTotalDebts)}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm border-b border-blue-200 pb-2 text-red-600">
+                              <span>Tolak: Kos Pendidikan Anak (FV):</span>
+                              <span className="font-semibold">- {formatRM(futureEduCostTotal)}</span>
+                            </div>
+                            <div className="flex justify-between items-center pt-2">
+                              <span className="text-blue-800 font-bold">Dana Tersedia Untuk Bersara:</span>
+                              <span className="font-bold text-blue-900 text-xl">{formatRM(bakiUntukBersara)}</span>
+                            </div>
+                          </div>
+
+                          <div className="bg-white p-6 rounded-xl border border-blue-100 shadow-sm text-center flex flex-col justify-center">
+                            <p className="text-slate-600 mb-2">Berdasarkan perbelanjaan sasaran <strong>{formatRM(futureMonthlyExpenses)}/bulan</strong>, dana ini mampu bertahan selama:</p>
+                            <p className={`font-extrabold text-5xl mb-2 ${exhaustAge >= lifeExpectancy ? 'text-emerald-600' : 'text-red-500'}`}>
+                              {yearsItWillLast.toFixed(1)} Tahun
+                            </p>
+                            <p className="text-sm text-slate-500 mb-4">
+                              Habis sepenuhnya pada umur: <strong className={exhaustAge >= lifeExpectancy ? 'text-emerald-600' : 'text-red-500'}>{Math.floor(exhaustAge)}</strong>
+                            </p>
+                            
+                            {exhaustAge < lifeExpectancy ? (
+                              <div className="text-xs text-red-700 bg-red-50 p-3 rounded-lg border border-red-100 flex gap-2 text-left">
+                                <AlertTriangle size={16} className="shrink-0 mt-0.5" />
+                                <span><strong>Perhatian!</strong> Dana dijangka defisit sebelum umur {lifeExpectancy} tahun. Sila tingkatkan simpanan, lunaskan hutang awal atau kurangkan kos gaya hidup.</span>
+                              </div>
+                            ) : (
+                              <div className="text-xs text-emerald-700 bg-emerald-50 p-3 rounded-lg border border-emerald-100 text-left flex gap-2">
+                                <ShieldCheck size={16} className="shrink-0 mt-0.5" />
+                                <span><strong>Tahniah!</strong> Baki dana anda dijangka mencukupi untuk persaraan yang selesa mengikut gaya hidup yang disasarkan.</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </Card>
+
+                      {/* AHA MOMENT: SOLUSI PERSARAAN */}
+                      {exhaustAge < lifeExpectancy && (
+                        <Card className="border-emerald-300 bg-white">
+                          <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3 mb-4">
+                            <Lightbulb className="text-amber-500" size={28} /> 
+                            Pelan Tindakan: Strategi Menutup Defisit <span className="text-red-600">RM{formatRM(retirementShortfall)}</span>
+                          </h3>
+                          <p className="text-sm text-slate-600 mb-6 border-b border-slate-100 pb-4">
+                            Sistem mengesan lompong kewangan sebanyak {Math.max(0, lifeExpectancy - exhaustAge).toFixed(1)} tahun. Berikut adalah angka realistik yang boleh anda lakukan bermula HARI INI untuk menyelamatkan persaraan anda:
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Opsyen A */}
+                            <div className="p-5 bg-emerald-50 border border-emerald-200 shadow-sm rounded-xl relative overflow-hidden">
+                              <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">Opsyen A</div>
+                              <h4 className="font-bold text-emerald-800 mb-1 flex items-center gap-2"><TrendingUp size={18} /> Simpanan Tambahan</h4>
+                              <div className="my-3">
+                                <span className="text-3xl font-black text-emerald-600">+{formatRM(extraSavingsNeeded)}</span>
+                                <span className="text-sm font-semibold text-emerald-800"> / bulan</span>
+                              </div>
+                              <p className="text-xs text-slate-600 leading-relaxed">
+                                Anda perlu mula menyimpan jumlah ini setiap bulan ke dalam instrumen yang memberikan pulangan minimum {assetReturnRate}% setahun sehingga umur bersara.
+                              </p>
+                            </div>
+                            
+                            {/* Opsyen B */}
+                            <div className="p-5 bg-amber-50 border border-amber-200 shadow-sm rounded-xl relative overflow-hidden">
+                              <div className="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">Opsyen B</div>
+                              <h4 className="font-bold text-amber-900 mb-1 flex items-center gap-2"><Wallet size={18} /> Penyelarasan Gaya Hidup (Downsize)</h4>
+                              <div className="my-3">
+                                <span className="text-3xl font-black text-amber-600">{formatRM(sustainableMonthlyExpense)}</span>
+                                <span className="text-sm font-semibold text-amber-800"> / bulan</span>
+                              </div>
+                              <p className="text-xs text-slate-600 leading-relaxed">
+                                Jika anda gagal tambah simpanan, anda TERPAKSA hadkan perbelanjaan sasaran persaraan anda kepada angka ini (Bukan lagi sasaran awal RM{formatRM(futureMonthlyExpenses)}/bulan).
+                              </p>
+                            </div>
+
+                            {/* Opsyen C & D */}
+                            <div className="col-span-1 md:col-span-2 p-4 bg-slate-50 border border-slate-200 rounded-xl mt-2 flex flex-col md:flex-row gap-4">
+                              <div className="flex-1 flex items-start gap-3">
+                                <PieChart className="text-blue-500 shrink-0 mt-1" size={20} />
+                                <div>
+                                  <h4 className="font-bold text-slate-700 text-sm">Opsyen C: Tingkatkan Pulangan Pelaburan (ROI)</h4>
+                                  <p className="text-xs text-slate-600 mt-1">Alihkan sebahagian aset ke instrumen berpotensi tinggi (seperti ETF, Saham patuh shariah) untuk atasi inflasi. *Tertakluk profil risiko anda.</p>
+                                </div>
+                              </div>
+                              <div className="w-px bg-slate-200 hidden md:block"></div>
+                              <div className="flex-1 flex items-start gap-3">
+                                <Clock className="text-purple-500 shrink-0 mt-1" size={20} />
+                                <div>
+                                  <h4 className="font-bold text-slate-700 text-sm">Opsyen D: Lewatkan Umur Bersara</h4>
+                                  <p className="text-xs text-slate-600 mt-1">Anjakkan sedikit umur bersara di atas (Cth: Dari {retireAge} ke {Math.min(lifeExpectancy - 1, retireAge + 3)} tahun). Ini memberi masa untuk aset berkembang & mengurangkan tempoh guna wang.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      )}
+                    </div>
+                  )}
+
+                  {/* TAHAP 4: PENYUCIAN */}
+                  {activeTab === 4 && (
+                    <Card className="animate-fadeIn">
+                      <SectionHeader title="Penyucian Harta (Zakat)" icon={HeartHandshake} description="Tanggungjawab semasa hidup. Kiraan Zakat 2.5% berdasarkan baki aset simpanan." />
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div className="space-y-3 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                          <h3 className="font-semibold text-slate-700 mb-2 border-b pb-2">Aset Simpanan (Dari Tab 2)</h3>
+                          <div className="flex justify-between text-slate-600 text-sm"><span>Tunai di Bank:</span> <span>{formatRM(tunai)}</span></div>
+                          <div className="flex justify-between text-slate-600 text-sm"><span>Tabung Haji:</span> <span>{formatRM(th)}</span></div>
+                          <div className="flex justify-between text-slate-600 text-sm"><span>Amanah Saham (ASB):</span> <span>{formatRM(asb)}</span></div>
+                          <div className="flex justify-between text-slate-600 text-sm"><span>Unit Trust:</span> <span>{formatRM(unitTrust)}</span></div>
+                          <div className="flex justify-between text-slate-600 text-sm"><span>Emas:</span> <span>{formatRM(emas)}</span></div>
+                        </div>
+
+                        <div className="bg-amber-50 rounded-xl p-8 border border-amber-200 flex flex-col justify-center text-center shadow-inner">
+                          <p className="text-amber-800 font-medium mb-1">Jumlah Harta Layak Zakat</p>
+                          <p className="text-2xl font-bold text-slate-800 mb-6">{formatRM(totalZakatable)}</p>
+                          
+                          <div className="h-px bg-amber-200 w-full mb-6"></div>
+                          
+                          <p className="text-amber-800 font-medium mb-2">Zakat Wajib Ditunaikan (2.5%)</p>
+                          <p className="text-5xl font-extrabold text-emerald-600">{formatRM(zakatPayable)}</p>
+                          
+                          <p className="text-xs text-amber-700 mt-6 bg-amber-100 p-3 rounded-lg text-left">
+                            *Nota: Kiraan ini mengandaikan semua simpanan melepasi Haul & Nisab semasa. KWSP dikecualikan sehingga pengeluaran.
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  )}
+
+                  {/* TAHAP 5: SENARIO KEMATIAN */}
+                  {activeTab === 5 && (
+                    <div className="space-y-6 animate-fadeIn">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <Card className="col-span-1 border-red-100">
+                          <SectionHeader title="Hutang & Pengurusan Jenazah" icon={Calculator} description="Tolak liabiliti sebelum harta dibahagikan." />
+                          <Input label="Kos Pengurusan Jenazah" value={funeralCost} onChange={e => setFuneralCost(Number(e.target.value))} prefix="RM" />
+                          <div className="p-3 bg-red-50 rounded-lg border border-red-100 mt-4">
+                            <p className="text-sm font-semibold text-red-800 mb-2">Jumlah Hutang Tertunggak (Dari Tab 2)</p>
+                            <p className="text-2xl font-bold text-red-600">{formatRM(totalDebts)}</p>
+                          </div>
+                        </Card>
+
+                        <Card className="col-span-2">
+                          <SectionHeader title="Pengurusan Harta & Wasiat" icon={BookOpen} description="Tuntutan isteri/suami dan peruntukan wasiat/wakaf." />
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                              <label className="text-sm font-semibold text-slate-700 mb-1 block">Tuntutan Harta Sepencarian (%)</label>
+                              <input 
+                                type="range" min="0" max="50" step="1" 
+                                value={sepencarianPercent} 
+                                onChange={e => setSepencarianPercent(Number(e.target.value))}
+                                className="w-full accent-blue-600"
+                                disabled={!hasSpouse}
+                              />
+                              <div className="flex justify-between text-xs text-slate-500 mt-1">
+                                <span>0%</span><span>{sepencarianPercent}% (Max 50%)</span>
+                              </div>
+                              <p className="text-xs text-blue-600 mt-2 italic">*Hanya untuk pasangan hidup (Hak ke atas harta fizikal).</p>
+                            </div>
+
+                            <div>
+                              <label className="text-sm font-semibold text-slate-700 mb-1 block">Wasiat / Wakaf / Sedekah (%)</label>
+                              <input 
+                                type="range" min="0" max="33.33" step="1"
+                                value={wasiatPercent} 
+                                onChange={e => setWasiatPercent(Number(e.target.value))}
+                                className="w-full accent-emerald-600"
+                              />
+                              <div className="flex justify-between text-xs text-slate-500 mt-1">
+                                <span>0%</span><span>{wasiatPercent}% (Max 1/3)</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 className="font-semibold text-slate-700 mb-3 border-b pb-2">Aliran Harta Pusaka Bersih</h4>
+                            <div className="space-y-2 text-sm">
+                              <div className="flex justify-between"><span className="text-slate-600">Harta Kasar:</span> <span>{formatRM(grossEstate)}</span></div>
+                              <div className="flex justify-between text-red-600"><span>- Kos Jenazah:</span> <span>-{formatRM(funeralCost)}</span></div>
+                              <div className="flex justify-between text-blue-600"><span>- Harta Sepencarian:</span> <span>-{formatRM(sepencarianAmount)}</span></div>
+                              <div className="flex justify-between text-red-600"><span>- Hutang & Zakat:</span> <span>-{formatRM(totalDebts + zakatPayable)}</span></div>
+                              <div className="border-t pt-2 flex justify-between font-semibold"><span className="text-slate-700">Harta Bersih (Net Estate):</span> <span>{formatRM(actualNetEstate)}</span></div>
+                              <div className="flex justify-between text-emerald-600"><span>- Wasiat / Wakaf:</span> <span>-{formatRM(wasiatAmount)}</span></div>
+                              <div className="border-t pt-2 flex justify-between font-bold text-lg"><span className="text-emerald-800">BAKI UNTUK FARAID:</span> <span className="text-emerald-600">{formatRM(faraidPool)}</span></div>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+
+                      {/* Faraid Results */}
+                      <Card>
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b pb-4">
+                          <div className="flex items-center gap-3">
+                            <PieChart className="text-emerald-600" size={28} />
+                            <h2 className="text-xl font-bold text-slate-800">Pembahagian Faraid Waris</h2>
+                          </div>
+                          <div className="flex gap-4 text-sm bg-slate-100 p-2 rounded-lg">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                              <input type="checkbox" checked={hasSpouse} onChange={(e) => setHasSpouse(e.target.checked)} className="accent-emerald-600" />
+                              Pasangan Hidup
+                            </label>
+                            <select value={parentsAlive} onChange={(e) => setParentsAlive(Number(e.target.value))} className="bg-transparent border-none outline-none font-semibold text-emerald-800">
+                              <option value={0}>Ibu Bapa Tiada</option><option value={1}>Ibu/Bapa Hidup</option><option value={2}>Keduanya Hidup</option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        {actualNetEstate <= 0 ? (
+                          <div className="text-center p-8 bg-red-50 rounded-xl border border-red-200">
+                            <AlertTriangle size={40} className="mx-auto text-red-500 mb-3" />
+                            <h3 className="font-bold text-red-800 text-lg">Harta Pusaka Defisit!</h3>
+                            <p className="text-red-600 mt-2">Hutang anda melepasi nilai aset. Tiada sebarang harta yang tinggal untuk diagihkan secara Faraid. Waris anda kini terbeban.</p>
+                          </div>
+                        ) : (
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse">
+                              <thead>
+                                <tr className="bg-emerald-50 border-b border-emerald-200">
+                                  <th className="p-4 font-semibold text-emerald-800">Waris (Dari Profil)</th>
+                                  <th className="p-4 font-semibold text-emerald-800 text-right">Kadar Bahagian</th>
+                                  <th className="p-4 font-semibold text-emerald-800 text-right">Nilai Diterima (RM)</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {faraidDistribution.map((item, index) => (
+                                  <tr key={index} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                    <td className="p-4 text-slate-800 font-medium">{item.name}</td>
+                                    <td className="p-4 text-slate-600 text-right">{item.percent.toFixed(2)}%</td>
+                                    <td className="p-4 text-emerald-600 font-bold text-right">{formatRM(item.amount)}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </Card>
+                    </div>
+                  )}
+
+                  {/* TAHAP 6: PELINDUNG & HIBAH (AHA MOMENT) */}
+                  {activeTab === 6 && (
+                    <div className="space-y-6 animate-fadeIn">
+                      <Card className="bg-gradient-to-br from-slate-800 to-slate-900 text-white border-none">
+                        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                          <div className="flex-1">
+                            <h2 className="text-2xl font-bold flex items-center gap-3 mb-2 text-amber-400">
+                              <Heart size={28} /> Realiti Untuk Pasangan (Waris) Anda
+                            </h2>
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                              Jika anda meninggal dunia hari ini, Faraid akan membahagikan harta tunai anda kepada waris lain (termasuk ibu bapa atau adik beradik). Adakah bahagian yang diterima isteri/suami cukup untuk meneruskan kehidupan dan membesarkan anak-anak?
+                            </p>
+                          </div>
+                          <div className="w-full md:w-1/3 bg-white p-4 rounded-xl shadow-inner text-black">
+                            <Input label="Hibah / Takaful Semasa Anda" value={currentTakaful} onChange={e => setCurrentTakaful(Number(e.target.value))} prefix="RM" />
+                          </div>
+                        </div>
+                      </Card>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                        <Card className="flex flex-col border-blue-200 shadow-sm">
+                          <h3 className="font-bold text-slate-800 mb-4 text-lg border-b pb-2">Jumlah Dana Diterima Pasangan</h3>
+                          <div className="space-y-4 flex-1 flex flex-col justify-center">
+                            <div className="flex justify-between items-center">
+                              <span className="text-slate-600">Harta Sepencarian (Tuntutan Fizikal):</span>
+                              <span className="font-semibold text-blue-600">{formatRM(sepencarianAmount)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-slate-600">Bahagian Faraid Pasangan ({spouseFaraidObj ? spouseFaraidObj.percent.toFixed(2) : 0}%):</span>
+                              <span className="font-semibold text-emerald-600">{formatRM(spouseFaraidAmount)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-slate-600">Pampasan Hibah Takaful Sedia Ada:</span>
+                              <span className="font-semibold text-amber-500">{formatRM(currentTakaful)}</span>
+                            </div>
+                            <div className="pt-4 mt-2 border-t border-slate-200">
+                              <p className="text-sm text-slate-500 mb-1">TOTAL DANA SURVIVAL PASANGAN:</p>
+                              <p className="text-3xl font-extrabold text-slate-800">{formatRM(totalSpouseSurvivalFund)}</p>
+                            </div>
+                          </div>
+                        </Card>
+
+                        <Card className="flex flex-col bg-amber-50 border-amber-200 shadow-sm">
+                          <h3 className="font-bold text-amber-900 mb-4 text-lg border-b border-amber-200 pb-2">Analisis Jurang Pendapatan (Income Replacement)</h3>
+                          <div className="space-y-4 flex-1 flex flex-col justify-center">
+                            <div className="bg-white p-4 rounded-lg border border-amber-100">
+                              <p className="text-sm text-amber-700 mb-1">Standard: 10 Tahun Perbelanjaan Keluarga</p>
+                              <p className="text-2xl font-bold text-amber-600">{formatRM(familySurvivalNeeds)}</p>
+                              <p className="text-xs text-slate-400 mt-1">({formatRM(currentExpenses)} / bulan x 12 bulan x 10 Tahun)</p>
+                            </div>
+
+                            <div className="flex justify-between items-center pt-2">
+                              <span className="text-slate-700 font-semibold text-lg">Jurang Dana Kekurangan:</span>
+                              <span className={`font-bold text-2xl ${incomeProtectionGap > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+                                {incomeProtectionGap > 0 ? formatRM(incomeProtectionGap) : 'Mencukupi'}
+                              </span>
+                            </div>
+
+                            {incomeProtectionGap > 0 ? (
+                              <div className="mt-2 text-sm text-red-700 bg-red-100 p-4 rounded-lg border border-red-200 leading-relaxed">
+                                <strong>Kesimpulan:</strong> Pasangan anda akan kekurangan dana sebanyak <strong>{formatRM(incomeProtectionGap)}</strong> untuk membesarkan anak-anak selama 10 tahun. Disinilah fungsi <strong>Hibah Takaful</strong>—ia adalah pampasan tunai mutlak tanpa perlu melalui proses panjang Faraid untuk menampung jurang ini.
+                              </div>
+                            ) : (
+                              <div className="mt-2 text-sm text-emerald-800 bg-emerald-100 p-4 rounded-lg border border-emerald-200 leading-relaxed">
+                                <strong>Tahniah:</strong> Gabungan Faraid dan Takaful sedia ada sudah memadai untuk menampung keluarga selama 10 tahun.
+                              </div>
+                            )}
+                          </div>
+                        </Card>
+                      </div>
+
+                      {/* AHA MOMENT: CHECKLIST SOLUSI PELINDUNGAN */}
+                      <div className="mt-8 mb-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <FileText size={24} className="text-slate-800" />
+                          <h3 className="text-xl font-bold text-slate-800">Checklist Solusi Pelindungan & Legasi Islam</h3>
+                        </div>
+                        <p className="text-slate-600 mb-6 text-sm">Berdasarkan profil kewangan dan nilai bersih harta anda, berikut adalah instrumen pengurusan harta Islam yang wajib dipertimbangkan dengan segera:</p>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {/* Instrumen 1: Hibah Takaful */}
+                          <div className={`flex items-start gap-4 p-5 bg-white rounded-xl border ${incomeProtectionGap > 0 ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'} shadow-sm transition-all hover:shadow-md`}>
+                            <div className={`p-3 rounded-full shrink-0 ${incomeProtectionGap > 0 ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-600'}`}>
+                              <ShieldCheck size={24} />
+                            </div>
+                            <div>
+                              <div className="flex justify-between items-start">
+                                <h4 className="font-bold text-slate-800">Hibah Takaful (Income Replacement)</h4>
+                                {incomeProtectionGap > 0 && <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded uppercase font-bold tracking-wide">Kritikal</span>}
+                              </div>
+                              <p className="text-sm text-slate-600 mt-1">
+                                Sediakan polisi bernilai <strong className="text-slate-800">{incomeProtectionGap > 0 ? `RM${formatRM(incomeProtectionGap)}` : 'tambahan'}</strong>. Pampasan tunai ini tidak akan dibekukan oleh sistem pusaka dan terus dibayar kepada penama untuk teruskan hidup.
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Instrumen 2: Amanah Tunai */}
+                          <div className="flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
+                            <div className="p-3 rounded-full shrink-0 bg-blue-100 text-blue-600">
+                              <Wallet size={24} />
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-slate-800">Amanah Tunai (Cash Trust)</h4>
+                              <p className="text-sm text-slate-600 mt-1">
+                                Anda memiliki <strong className="text-slate-800">RM{formatRM(totalLiquidAssets)}</strong> aset cair. Gunakan sebahagiannya untuk didaftarkan sebagai 'Deklarasi Hibah Tunai'. Duit ini boleh dikeluarkan dalam masa 7-14 hari jika kematian berlaku.
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Instrumen 3: Harta Sepencarian */}
+                          {hasSpouse && (
+                            <div className="flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
+                              <div className="p-3 rounded-full shrink-0 bg-amber-100 text-amber-600">
+                                <Heart size={24} />
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-slate-800">Deklarasi Harta Sepencarian Berdaftar</h4>
+                                <p className="text-sm text-slate-600 mt-1">
+                                  Daftarkan dokumen persetujuan ini di mahkamah semasa hidup. Anda boleh wariskan 50%-100% hak milik aset seperti rumah (<strong className="text-slate-800">RM{formatRM(rumahValue)}</strong>) mutlak kepada pasangan agar tidak menjadi rebutan waris.
+                                </p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Instrumen 4: Amanah Hayat (Living Trust) / Wakaf */}
+                          <div className="flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
+                            <div className="p-3 rounded-full shrink-0 bg-purple-100 text-purple-600">
+                              <BookOpen size={24} />
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-slate-800">Amanah Hayat & Wakaf Keluarga</h4>
+                              <p className="text-sm text-slate-600 mt-1">
+                                Lantik pemegang amanah korporat untuk menguruskan harta bagi pihak anak bawah umur (18 tahun) atau wujudkan dana wakaf amal jariah menggunakan wang lebihan untuk bekalan akhirat.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  )}
+                </div>
+
+                {/* --- BUTANG NAVIGASI HALAMAN BAWAH --- */}
+                <div className="mt-8 flex justify-between items-center border-t border-slate-200 pt-6">
+                  {activeTab > 1 ? (
+                    <button
+                      onClick={handlePrevTab}
+                      className="px-6 py-3 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-800 border border-slate-300 font-bold rounded-xl transition-colors shadow-sm"
+                    >
+                      Kembali
+                    </button>
+                  ) : (
+                    <div></div> /* Empty div untuk spacing bila butang kembali tiada */
+                  )}
+
+                  {activeTab < 6 ? (
+                    <button
+                      onClick={handleNextTab}
+                      className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl flex items-center gap-2 transition-colors shadow-sm ml-auto"
+                    >
+                      Seterusnya <ArrowRight size={20} />
+                    </button>
+                  ) : (
+                    <div className="flex flex-col md:flex-row gap-3 ml-auto w-full md:w-auto mt-4 md:mt-0">
+                      <button
+                        onClick={() => {
+                          setShowReport(true);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm w-full md:w-auto"
+                      >
+                        <Printer size={20} /> Jana Laporan PDF
+                      </button>
+                      <button
+                        onClick={() => {
+                          setActiveTab(1);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="px-6 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl transition-colors shadow-sm w-full md:w-auto text-center"
+                      >
+                        Mula Semula
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+              </main>
+              
+              <footer className="max-w-6xl mx-auto mt-12 text-center text-slate-500 text-sm">
+                <p>myTADBIR: Membantu anda merancang legasi kewangan dan kelangsungan hidup waris mengikut prinsip Islam.</p>
+              </footer>
+            </div>
+          );
+        }
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
