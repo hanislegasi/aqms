@@ -709,6 +709,18 @@ Pendekatan ini bukan sahaja meningkatkan kesedaran dan literasi kewarisan, malah
       document.getElementById('current-year').innerText = new Date().getFullYear();
       renderApp();
     });
+
+    
+function toggleMobileMenu() {
+  const menu = document.getElementById("mobile-nav");
+
+  if (menu.classList.contains("hidden")) {
+    menu.classList.remove("hidden");
+  } else {
+    menu.classList.add("hidden");
+  }
+}
+
   </script>
 </body>
 </html>
