@@ -18,7 +18,9 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     .font-inter { font-family: 'Inter', sans-serif; }
+    /* Hide scrollbar for Chrome, Safari and Opera */
     .scrollbar-hide::-webkit-scrollbar { display: none; }
+    /* Hide scrollbar for IE, Edge and Firefox */
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
@@ -28,10 +30,16 @@
   <header class="sticky top-0 z-50 shadow-md font-inter" style="background-color: #153638;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-24">
+        
+        <!-- Logo Area -->
         <div id="header-logo-container" class="flex items-center cursor-pointer h-full py-2" onclick="setActiveTab('utama')">
           <img id="header-logo" src="https://i.postimg.cc/JhLc8szZ/Copy-of-A.png" alt="AQMS Logo" class="h-full max-h-20 w-auto object-contain" onerror="handleLogoError()">
         </div>
+        
+        <!-- Desktop Nav -->
         <nav id="desktop-nav" class="hidden md:flex space-x-1 items-center"></nav>
+        
+        <!-- Mobile Menu Toggle -->
         <div class="md:hidden">
           <button onclick="toggleMobileMenu()" class="p-2" id="mobile-menu-btn">
             <i data-lucide="menu" class="h-7 w-7 text-white"></i>
@@ -39,13 +47,19 @@
         </div>
       </div>
     </div>
+    
+    <!-- Mobile Nav Area -->
     <div id="mobile-nav" class="hidden"></div>
   </header>
 
   <!-- HERO BANNER -->
   <div class="relative pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden font-inter" style="background-color: #153638;">
     <div class="relative max-w-7xl mx-auto px-4 text-center">
+      
+      <!-- Hero Icon / Logo -->
       <div id="hero-media"></div>
+
+      <!-- Hero Text -->
       <h1 class="text-3xl tracking-tight font-extrabold text-white sm:text-5xl lg:text-6xl mb-6">
         <span class="block" id="hero-title"></span>
         <span class="block mt-2 text-2xl md:text-3xl font-medium" style="color: #d8ae81;" id="hero-subtitle"></span>
@@ -60,16 +74,20 @@
       <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-8 sm:p-12">
         <div class="flex flex-col md:flex-row gap-10">
           <div class="flex-1">
+            <!-- Dynamic Details -->
             <div id="content-details" class="prose prose-lg max-w-none text-gray-600"></div>
+            
             <div class="mt-10 pt-6 border-t border-gray-100">
               <button onclick="window.open('https://wa.me/60129443846?text=Saya%20nak%20tanya%20tentang%20perwarisan%20harta%20Islam', '_blank')"
-                class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
-                style="background-color: #153638;">
-                Hubungi Perunding Sekarang 
-                <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
-              </button>
+class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
+style="background-color: #153638;">
+  Hubungi Perunding Sekarang 
+  <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
+</button>
             </div>
           </div>
+          
+          <!-- Sidebar Nav -->
           <aside class="hidden md:block w-64 flex-shrink-0">
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 sticky top-32">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 border-b pb-2">Navigasi Pantas</h4>
@@ -126,12 +144,11 @@
     </div>
   </footer>
 
+  <!-- SCRIPT UNTUK DATA, LOGIK & RENDER -->
   <script>
-    const theme = {
-      primary: '#153638', 
-      accent: '#d8ae81',  
-      light: '#f8f9fa',
-      dark: '#0f292a'
+    // CONFIGURATION URL LOGO & CONFIG
+    const LOGO_URLS = {
+      main: "https://i.postimg.cc/JhLc8szZ/Copy-of-A.png"
     };
 
     const URL_CONFIG = {
@@ -139,7 +156,15 @@
       wasiat: "https://wasiatku.my?cid=252"
     };
 
- const contentData = {
+    const theme = {
+      primary: '#153638', 
+      accent: '#d8ae81',  
+      light: '#f8f9fa',
+      dark: '#0f292a'
+    };
+
+    // CONTENT DATA
+    const contentData = {
       utama: {
         id: 'utama',
         title: 'Laman Utama',
@@ -214,6 +239,9 @@ Rundingan PERCUMA bersama Perunding kami. Sila lengkapkan borang berikut (sila i
   <option value="Email">Email</option>
 </select>
 
+<!-- TARIKH (Date Picker) -->
+<input type="date" name="tarikh" required class="w-full p-3 border rounded-lg">
+
     <button type="submit" class="w-full bg-[#153638] text-white py-3 rounded-lg font-bold">
       Hantar
     </button>
@@ -227,7 +255,7 @@ Rundingan PERCUMA bersama Perunding kami. Sila lengkapkan borang berikut (sila i
             </p>  
         `
       },
-       wasiat: {
+      wasiat: {
         id: 'wasiat',
         title: 'Wasiat',
         iconName: 'scroll-text',
@@ -289,27 +317,12 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
         details: `
 <div class="space-y-6 text-gray-700 font-inter text-justify">
 <p class="text-sm text-gray-700">
-    <p><strong>HARTA</strong> yang anda kumpul bertahun-tahun… boleh jadi punca pergaduhan selepas anda tiada.
+    <p><strong>HIBAH</strong> merupakan satu instrumen penting dalam Islam yang membolehkan seseorang mengagihkan harta miliknya secara sukarela ketika masih hidup, dengan niat untuk menjaga kebajikan dan kesejahteraan ahli keluarga. Dalam suasana hari ini, hibah dilihat sebagai satu langkah bijak bagi mengelakkan pertikaian harta pusaka serta memastikan hak individu tertentu seperti pasangan, anak angkat atau pihak yang memerlukan terus terpelihara.
 
-    <p> Ramai tidak sedar, tanpa perancangan awal, harta boleh menjadi punca perebutan antara waris sendiri.
-      Hibah ialah cara <strong>pemberian harta semasa hidup</strong> yang diiktiraf dalam Islam.
-    </p>
-
-    <ul class="list-disc pl-6 space-y-2">
-      <li>Menentukan siapa penerima harta anda</li>
-      <li>Mengelakkan pertikaian Faraid selepas kematian</li>
-      <li>Melindungi pasangan, anak atau insan tersayang lebih awal</li>
-    </ul>
- 
-    <p> Hibah bukan sekadar pemberian… ia adalah perancangan kasih sayang.
-    </p>
-  </div>
-
-  </div>
-  
+    <p>Islam amat menitikberatkan keadilan dan keharmonian dalam pengurusan harta. Justeru, hibah menjadi salah satu jalan penyelesaian yang patuh syariah, selagi ia dilaksanakan dengan jelas, tanpa penipuan, serta tidak menzalimi mana-mana pihak. Ia juga mencerminkan sifat kasih sayang, tanggungjawab dan perancangan awal seseorang terhadap masa depan keluarganya.
   </p>
-  
-          <div class="space-y-6 font-inter mt-8 ">
+   
+          <div class="space-y-6 font-inter">
             <h3 class="text-xl font-bold" style="color: ${theme.primary}">3 Jenis Hibah Utama</h3>
             <div class="space-y-4">
               <div class="flex items-start p-4 bg-white border rounded-xl shadow-sm">
@@ -333,9 +346,9 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
                   <p class="text-sm text-gray-600">Manfaat diberikan selepas kematian pemberi.</p>
                 </div>
                 </div>
-     <p class="text-justify leading-relaxed">Oleh itu, umat Islam diseru untuk tidak memandang ringan soal perancangan harta. Ambillah langkah bijak dengan merancang hibah dari sekarang agar harta yang dimiliki menjadi asbab kebaikan, bukan punca perpecahan.
+     <p>Oleh itu, umat Islam diseru untuk tidak memandang ringan soal perancangan harta. Ambillah langkah bijak dengan merancang hibah dari sekarang agar harta yang dimiliki menjadi asbab kebaikan, bukan punca perpecahan.
    </p>
-<p class="text-justify leading-relaxed"><strong>INGAT!!!</strong> Jangan biarkan orang tersayang menunggu proses yang panjang untuk mendapatkan apa yang anda niatkan untuk mereka.
+<p><strong>INGAT!!!</strong> Jangan biarkan orang tersayang menunggu proses yang panjang untuk mendapatkan apa yang anda niatkan untuk mereka.
               </div>
             </div>
           </div>
@@ -357,7 +370,6 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
           </div>
         `
       },
-
       faraid: {
         id: 'faraid',
         title: 'Faraid',
@@ -367,91 +379,72 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
         details: `
           <div class="space-y-4 text-gray-700 font-inter text-justify">
             <p><strong>FARAID</strong> merupakan kaedah pembahagian harta pusaka dalam Islam yang telah ditetapkan dengan jelas, di mana setiap waris menerima bahagian tertentu berdasarkan hubungan kekeluargaan.</p>
-            <p>Agihan ini melibatkan waris seperti pasangan (suami/isteri), anak-anak, ibu bapa dan waris lain yang layak.</p>
-          <p>Sebagaimana firman Allah SWT dalam Surah An-Nisa ayat 11:<br/>
-            <strong>"Allah mensyariatkan bagimu tentang (pembahagian pusaka untuk) anak-anakmu, iaitu bahagian seorang anak lelaki sama dengan bahagian dua orang anak perempuan..."</strong></p>
+            <p>Sebagai contoh, jika si mati meninggalkan seorang isteri dan anak-anak, isteri akan menerima 1/8 (12.5%) daripada harta pusaka jika ada anak, manakala baki diagihkan kepada anak-anak dengan nisbah anak lelaki 2 bahagian dan anak perempuan 1 bahagian.</p>
           </div>
 
+
+
+          <!-- KALKULATOR FARAID MINI - RESTRUKTUR: ATAS KE BAWAH -->
           <div class="mt-8 space-y-4">
             <h3 class="text-xl font-bold mb-4 flex items-center" style="color: #153638">
-              <i data-lucide="calculator" class="mr-2 text-[#d8ae81]"></i> Anggaran Pembahagian Faraid
+              <i data-lucide="calculator" class="mr-2"></i> Anggaran Pembahagian Faraid
             </h3>
             
             <div class="flex flex-col space-y-4">
                 <!-- 1. MAKLUMAT SI MATI -->
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                    <h4 class="font-bold text-[#153638] text-sm mb-3 border-b border-gray-200 pb-2 uppercase tracking-wider">1. Maklumat Si Mati</h4>
+                    <h4 class="font-bold text-[#153638] text-sm mb-3 border-b border-gray-200 pb-2">1. Maklumat Si Mati</h4>
                     <div class="flex items-center justify-between">
                         <label class="font-medium text-sm text-gray-600">Jantina Si Mati</label>
-                        <select id="far_jantina" class="border border-gray-300 rounded-lg px-3 py-1.5 w-36 text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" onchange="updateFaraidUI()">
+                        <select id="far_jantina" class="border border-gray-300 rounded-lg px-3 py-1.5 w-36 text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" onchange="document.getElementById('label_pasangan').innerText = this.value === 'lelaki' ? 'Bilangan Isteri' : 'Suami (Ada/Tiada)'; toggleWaris();">
                             <option value="lelaki">Lelaki</option>
                             <option value="perempuan">Perempuan</option>
                         </select>
                     </div>
                 </div>
                 
-                <!-- 2. WARIS UTAMA -->
+                <!-- 2. SENARAI WARIS UTAMA -->
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                    <h4 class="font-bold text-[#153638] text-sm mb-3 border-b border-gray-200 pb-2 uppercase tracking-wider">2. Waris Utama</h4>
+                    <h4 class="font-bold text-[#153638] text-sm mb-3 border-b border-gray-200 pb-2">2. Senarai Waris Utama</h4>
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <label id="label_pasangan" class="font-medium text-sm text-gray-600">Bilangan Isteri</label>
-                            <input type="number" id="far_pasangan" min="0" max="4" value="1" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm outline-none" oninput="kiraFaraid()">
+                            <input type="number" id="far_pasangan" min="0" max="4" value="1" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
                         </div>
                         <div class="flex items-center justify-between">
                             <label class="font-medium text-sm text-gray-600">Bapa (Ada: 1, Tiada: 0)</label>
-                            <input type="number" id="far_bapa" min="0" max="1" value="0" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm outline-none" oninput="kiraFaraid()">
+                            <input type="number" id="far_bapa" min="0" max="1" value="0" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
                         </div>
                         <div class="flex items-center justify-between">
                             <label class="font-medium text-sm text-gray-600">Ibu (Ada: 1, Tiada: 0)</label>
-                            <input type="number" id="far_ibu" min="0" max="1" value="0" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm outline-none" oninput="kiraFaraid()">
+                            <input type="number" id="far_ibu" min="0" max="1" value="0" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
                         </div>
                         <div class="flex items-center justify-between">
-                            <label class="font-medium text-sm text-gray-600">Anak Lelaki</label>
-                            <input type="number" id="far_al" min="0" value="0" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm outline-none" oninput="kiraFaraid()">
+                            <label class="font-medium text-sm text-gray-600">Anak Lelaki (Bilangan)</label>
+                            <input type="number" id="far_al" min="0" value="0" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
                         </div>
                         <div class="flex items-center justify-between">
-                            <label class="font-medium text-sm text-gray-600">Anak Perempuan</label>
-                            <input type="number" id="far_ap" min="0" value="1" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm outline-none" oninput="kiraFaraid()">
+                            <label class="font-medium text-sm text-gray-600">Anak Perempuan (Bilangan)</label>
+                            <input type="number" id="far_ap" min="0" value="1" class="border border-gray-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. WARIS GANTI (PENYATUAN INPUT) -->
-                <div id="panel_ganti" class="hidden bg-orange-50 p-5 rounded-xl border border-orange-100">
-                    <div class="flex items-center mb-4">
-                      <i data-lucide="info" class="w-4 h-4 text-orange-600 mr-2"></i>
-                      <h4 class="font-black text-orange-800 text-[10px] uppercase tracking-widest">Waris Ganti & Adik-Beradik</h4>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div class="col-span-1 sm:col-span-2">
-                            <label class="block text-[10px] font-bold text-orange-700 uppercase mb-1">Cucu Lelaki (Anak kpd Anak L)</label>
-                            <input type="number" id="far_cl" value="0" min="0" oninput="kiraFaraid()" class="w-full border border-orange-200 rounded-lg p-2 text-sm outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-orange-700 uppercase mb-1">Sdra Kandung (L)</label>
-                            <input type="number" id="far_sl" value="0" min="0" oninput="kiraFaraid()" class="w-full border border-orange-200 rounded-lg p-2 text-sm outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-orange-700 uppercase mb-1">Sdra Kandung (P)</label>
-                            <input type="number" id="far_sp" value="0" min="0" oninput="kiraFaraid()" class="w-full border border-orange-200 rounded-lg p-2 text-sm outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-orange-700 uppercase mb-1">Sdra Sebapa (L)</label>
-                            <input type="number" id="far_ssb" value="0" min="0" oninput="kiraFaraid()" class="w-full border border-orange-200 rounded-lg p-2 text-sm outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-orange-700 uppercase mb-1">Anak Sdra Kandung (L)</label>
-                            <input type="number" id="far_as" value="0" min="0" oninput="kiraFaraid()" class="w-full border border-orange-200 rounded-lg p-2 text-sm outline-none">
-                        </div>
-                    </div>
+                <!-- 3. WARIS GANTI/KEDUA (Auto-show if needed) -->
+                <div id="extended_waris_section" class="bg-orange-50 p-4 rounded-xl border border-orange-100 hidden">
+                    <h4 class="font-bold text-orange-800 text-xs mb-2 uppercase tracking-tight flex items-center">
+                       <i data-lucide="info" class="w-3 h-3 mr-1"></i> Waris Ganti / Lapis Kedua
+                    </h4>
+                    <p class="text-[11px] text-orange-700 leading-tight">Disebabkan ketiadaan Anak Lelaki atau Bapa, baki harta berpotensi diwarisi oleh waris lapis kedua (Adik-beradik/Cucu/Datuk). Hubungi pakar kami untuk perincian penuh.</p>
                 </div>
                 
-                <!-- 4. RINGKASAN AGIHAN -->
+                <!-- 4. KEPUTUSAN JADUAL PREMIUM -->
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                    <h4 class="font-bold text-[#153638] text-sm p-4 bg-gray-50 border-b border-gray-200 uppercase tracking-wider">3. Hasil Ringkasan Agihan</h4>
-                    <div id="faraid-table-container"></div>
-                    <div class="p-3 bg-[#153638] text-[9px] text-white/50 italic text-center">
+                    <h4 class="font-bold text-[#153638] text-sm p-4 bg-gray-50 border-b border-gray-200">3. Ringkasan Agihan</h4>
+                    <div id="pokok-waris-result" class="w-full">
+                        <!-- Jadual Agihan akan dijana di sini -->
+                    </div>
+                    <div class="p-3 bg-gray-50 text-[10px] text-gray-400 italic text-center">
                         Tuntutan sebenar tertakluk kepada Sijil Faraid Mahkamah Syariah.
                     </div>
                 </div>
@@ -459,7 +452,7 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
           </div>
         `
       },
-       urus_pusaka: {
+      urus_pusaka: {
         id: 'urus_pusaka',
         title: 'Urus Pusaka',
         iconName: 'briefcase',
@@ -573,154 +566,423 @@ Pendekatan ini bukan sahaja meningkatkan kesedaran dan literasi kewarisan, malah
 }
     };
 
+    
 
+    const navItems = Object.keys(contentData);
+
+    // STATE PENGURUSAN
     let activeTab = 'utama';
     let isMobileMenuOpen = false;
+    let logoError = false;
 
+    // FUNGSI RENDER
     function renderApp() {
       const currentContent = contentData[activeTab];
-      const navItems = Object.keys(contentData);
 
-      document.getElementById('desktop-nav').innerHTML = navItems.map(key => {
+      // 1. Render Desktop Nav
+      const desktopNav = document.getElementById('desktop-nav');
+      desktopNav.innerHTML = navItems.map(key => {
         const isActive = activeTab === key;
-        return `<button onclick="setActiveTab('${key}')" class="px-3 py-2 rounded-md text-sm font-bold transition-all ${isActive ? 'bg-[#0f292a] text-[#d8ae81] border-b-2 border-[#d8ae81]' : 'text-gray-300 hover:text-[#d8ae81]'}">${contentData[key].title}</button>`;
+        const classes = isActive 
+          ? `bg-[#0f292a] text-[#d8ae81] border-b-2 border-[#d8ae81]` 
+          : `text-gray-300 hover:bg-[#0f292a] hover:text-[#d8ae81]`;
+        return `<button onclick="setActiveTab('${key}')" class="px-3 py-2 rounded-md text-sm font-bold transition-all duration-200 ${classes}">${contentData[key].title}</button>`;
       }).join('');
 
+      // 2. Render Mobile Nav
+      const mobileNav = document.getElementById('mobile-nav');
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      
+      if (isMobileMenuOpen) {
+        mobileBtn.innerHTML = `<i data-lucide="x" class="h-7 w-7 text-white"></i>`;
+        mobileNav.innerHTML = `
+          <div class="md:hidden bg-[#0f292a] border-t border-[#1a4346]">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+              ${navItems.map(key => {
+                const isActive = activeTab === key;
+                const classes = isActive ? 'bg-[#153638] text-white border-l-4 border-[#d8ae81]' : 'text-gray-300';
+                return `
+                <button onclick="setActiveTab('${key}'); toggleMobileMenu(false);" class="flex items-center w-full px-3 py-3 rounded-md text-base font-bold ${classes}">
+                  <span class="mr-3" style="color: ${theme.accent}"><i data-lucide="${contentData[key].iconName}" class="w-6 h-6"></i></span>
+                  ${contentData[key].title}
+                </button>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+        mobileNav.classList.remove('hidden');
+      } else {
+        mobileBtn.innerHTML = `<i data-lucide="menu" class="h-7 w-7 text-white"></i>`;
+        mobileNav.classList.add('hidden');
+      }
+
+      // 3. Render Hero Content
       document.getElementById('hero-title').innerText = currentContent.title;
       document.getElementById('hero-subtitle').innerText = currentContent.hero;
       document.getElementById('hero-desc').innerText = currentContent.description;
-      document.getElementById('hero-media').innerHTML = `<div class="flex justify-center mb-6"><div class="p-4 rounded-full bg-white/5 border border-white/10 text-[#d8ae81] scale-150"><i data-lucide="${currentContent.iconName}"></i></div></div>`;
+      
+      const heroMedia = document.getElementById('hero-media');
+      heroMedia.innerHTML = `
+        <div class="flex justify-center mb-6">
+          <div class="p-4 rounded-full bg-white/5 border border-white/10 shadow-lg text-[#d8ae81] scale-150 transform transition-transform">
+            <i data-lucide="${currentContent.iconName}" class="w-6 h-6"></i>
+          </div>
+        </div>
+      `;
+
+      // 4. Render Main Details & Sidebar
       document.getElementById('content-details').innerHTML = currentContent.details;
 
-      document.getElementById('sidebar-nav').innerHTML = navItems.map(key => {
+      const sidebarNav = document.getElementById('sidebar-nav');
+      sidebarNav.innerHTML = navItems.map(key => {
         const isActive = activeTab === key;
-        return `<li><button onclick="setActiveTab('${key}')" class="w-full flex items-center px-3 py-3 text-sm rounded-lg ${isActive ? 'bg-white shadow-md font-bold' : 'text-gray-600 hover:bg-gray-100'}" style="${isActive ? 'border-left: 4px solid #d8ae81; color: #153638;' : ''}"><span class="mr-3 ${isActive ? 'text-[#d8ae81]' : ''}"><i data-lucide="${contentData[key].iconName}" class="w-4 h-4"></i></span>${contentData[key].title}</button></li>`;
+        const activeClass = isActive ? 'bg-white shadow-md font-bold' : 'text-gray-600 hover:bg-gray-100';
+        const inlineStyle = isActive ? `border-left: 4px solid ${theme.accent}; color: ${theme.primary};` : ``;
+        const iconColor = isActive ? theme.accent : 'inherit';
+        
+        return `
+        <li>
+          <button onclick="setActiveTab('${key}')" class="w-full flex items-center text-left px-3 py-3 text-sm rounded-lg transition-all ${activeClass}" style="${inlineStyle}">
+            <span class="mr-3" style="color: ${iconColor}"><i data-lucide="${contentData[key].iconName}" class="w-4 h-4"></i></span>
+            ${contentData[key].title}
+          </button>
+        </li>`;
       }).join('');
 
+      // Refresh Lucide Icons after DOM changes
       lucide.createIcons();
-      if (activeTab === 'faraid') kiraFaraid();
-    }
 
-    function setActiveTab(tab) { activeTab = tab; window.scrollTo({ top: 0, behavior: 'smooth' }); renderApp(); }
-    function toggleMobileMenu() { isMobileMenuOpen = !isMobileMenuOpen; renderApp(); }
-
-    // LOGIK FARAID (CASCADING & GANTI)
-    function updateFaraidUI() {
-      const jantina = document.getElementById('far_jantina').value;
-      document.getElementById('label_pasangan').innerText = jantina === 'lelaki' ? 'Bilangan Isteri' : 'Suami (0/1)';
-      kiraFaraid();
-    }
-
-    function kiraFaraid() {
-      const jantina = document.getElementById('far_jantina').value;
-      const pasangan = parseInt(document.getElementById('far_pasangan').value) || 0;
-      const bapa = parseInt(document.getElementById('far_bapa').value) || 0;
-      const ibu = parseInt(document.getElementById('far_ibu').value) || 0;
-      const al = parseInt(document.getElementById('far_al').value) || 0;
-      const ap = parseInt(document.getElementById('far_ap').value) || 0;
-
-      // Waris Ganti
-      const cl = parseInt(document.getElementById('far_cl').value) || 0;
-      const sl = parseInt(document.getElementById('far_sl').value) || 0;
-      const sp = parseInt(document.getElementById('far_sp').value) || 0;
-      const ssb = parseInt(document.getElementById('far_ssb').value) || 0;
-      const as = parseInt(document.getElementById('far_as').value) || 0;
-
-      // Papar panel ganti jika Anak L & Bapa tiada
-      const panelGanti = document.getElementById('panel_ganti');
-      const gantiAktif = (al === 0 && bapa === 0);
-      if(panelGanti) panelGanti.style.display = gantiAktif ? 'block' : 'none';
-
-      let results = [];
-      const BASE = 24;
-      let hasChild = (al > 0 || ap > 0);
-
-      // 1. Fardu: Pasangan
-      if (jantina === 'lelaki' && pasangan > 0) results.push({ n: pasangan > 1 ? `${pasangan} Isteri` : 'Isteri', v: hasChild ? 3 : 6, t: 'Fardu', c: 'bg-teal-500' });
-      else if (jantina === 'perempuan' && pasangan > 0) results.push({ n: 'Suami', v: hasChild ? 6 : 12, t: 'Fardu', c: 'bg-teal-500' });
-
-      // 2. Fardu: Ibu/Bapa
-      if (ibu > 0) results.push({ n: 'Ibu', v: hasChild ? 4 : 8, t: 'Fardu', c: 'bg-blue-400' });
-      if (bapa > 0) results.push({ n: 'Bapa', v: 4, t: 'Fardu', c: 'bg-blue-600' });
-
-      let currentSum = results.reduce((acc, curr) => acc + curr.v, 0);
-      let baki = BASE - currentSum;
-
-      // 3. Anak-anak
-      if (hasChild) {
-        if (al === 0) {
-          let shareAp = (ap === 1) ? 12 : 16;
-          results.push({ n: ap > 1 ? `${ap} Anak Perempuan` : 'Anak Perempuan', v: shareAp, t: 'Fardu', c: 'bg-pink-500' });
-          baki -= shareAp;
-        } else {
-          let nisbah = (al * 2) + ap;
-          results.push({ n: `${al} Anak Lelaki`, v: (baki * (al * 2)) / nisbah, t: 'Asabah', c: 'bg-indigo-600' });
-          if (ap > 0) results.push({ n: `${ap} Anak Perempuan`, v: (baki * ap) / nisbah, t: 'Asabah', c: 'bg-pink-400' });
-          baki = 0;
-        }
+      // Semak jika tab Faraid aktif, jalankan kalkulator
+      if (activeTab === 'faraid') {
+        setTimeout(() => {
+          if (typeof toggleWaris === 'function') toggleWaris();
+        }, 100);
       }
+    }
 
-      // 4. Logik Cascading Waris Ganti
-      if (baki > 0) {
-        if (bapa > 0) {
-          let b = results.find(x => x.n === 'Bapa');
-          if (b) { b.v += baki; b.t = 'Fardu + Asabah'; }
-          baki = 0;
-        } else if (cl > 0) {
-          results.push({ n: `${cl} Cucu Lelaki`, v: baki, t: 'Asabah (Ganti)', c: 'bg-orange-500' });
-          baki = 0;
-        } else if (sl > 0 || sp > 0) {
-          let nisbahSdra = (sl * 2) + sp;
-          if (sl > 0) results.push({ n: `${sl} Sdra Kandung (L)`, v: (baki * (sl * 2)) / nisbahSdra, t: 'Asabah (Ganti)', c: 'bg-purple-600' });
-          if (sp > 0) results.push({ n: `${sp} Sdra Kandung (P)`, v: (baki * sp) / nisbahSdra, t: 'Asabah (Ganti)', c: 'bg-purple-300' });
-          baki = 0;
-        } else if (ssb > 0) {
-          results.push({ n: `${ssb} Sdra Sebapa (L)`, v: baki, t: 'Asabah (Ganti)', c: 'bg-amber-600' });
-          baki = 0;
-        } else if (as > 0) {
-          results.push({ n: `${as} Anak Sdra Kandung`, v: baki, t: 'Asabah (Ganti)', c: 'bg-yellow-600' });
-          baki = 0;
-        } else {
-          results.push({ n: 'Baitulmal', v: baki, t: 'Baki Harta', c: 'bg-gray-400' });
-          baki = 0;
-        }
+    // INTERAKSI PENGGUNA
+    function setActiveTab(tab) {
+      activeTab = tab;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderApp();
+    }
+
+    function toggleMobileMenu(forceState) {
+      if (typeof forceState === 'boolean') {
+        isMobileMenuOpen = forceState;
+      } else {
+        isMobileMenuOpen = !isMobileMenuOpen;
       }
-
-      renderTable(results, BASE);
+      renderApp();
     }
 
-    function renderTable(data, base) {
-      const container = document.getElementById('faraid-table-container');
-      if (!container) return;
-      let html = `<table class="w-full text-left border-collapse text-xs">
-        <thead><tr class="bg-gray-50 font-bold text-gray-500 uppercase tracking-tighter"><th class="p-4">Waris</th><th class="p-4 text-center">Pecahan</th><th class="p-4 text-right">Peratus</th></tr></thead>
-        <tbody class="divide-y">`;
-      data.forEach(r => {
-        let p = ((r.v / base) * 100).toFixed(1);
-        html += `<tr><td class="p-4 font-bold text-[#153638]">${r.n}<br><span class="text-[9px] text-gray-400 uppercase">${r.t}</span></td>
-        <td class="p-4 text-center font-mono font-bold text-[#d8ae81]">${Math.round(r.v*10)/10}/${base}</td>
-        <td class="p-4 text-right font-black text-gray-700">${p}%<div class="w-full h-1 bg-gray-100 rounded-full mt-1 overflow-hidden"><div class="${r.c} h-full" style="width:${p}%"></div></div></td></tr>`;
-      });
-      html += `</tbody></table>`;
-      container.innerHTML = html;
+    function handleLogoError() {
+      if (!logoError) {
+        logoError = true;
+        document.getElementById('header-logo-container').innerHTML = `
+          <div class="flex flex-col"><span class="text-2xl font-bold tracking-wide text-white">AQ<span style="color: ${theme.accent}">MS</span></span></div>
+        `;
+      }
     }
 
+    // INIT
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('current-year').innerText = new Date().getFullYear();
       renderApp();
     });
 
-    
-function toggleMobileMenu() {
-  const menu = document.getElementById("mobile-nav");
+    // ===============================
+// FUNGSI KIRA FARAID (FIXED VERSION)
+// ===============================
+function calculateFaraid() {
+    const jantina = document.getElementById('far_jantina').value;
 
-  if (menu.classList.contains("hidden")) {
-    menu.classList.remove("hidden");
-  } else {
-    menu.classList.add("hidden");
-  }
+    const isteriCount = jantina === 'lelaki'
+        ? (parseInt(document.getElementById('far_pasangan').value) || 0)
+        : 0;
+
+    const suamiCount = jantina === 'perempuan'
+        ? (parseInt(document.getElementById('far_pasangan').value) || 0)
+        : 0;
+
+    const bapa = parseInt(document.getElementById('far_bapa').value) || 0;
+    const ibu = parseInt(document.getElementById('far_ibu').value) || 0;
+
+    const al = parseInt(document.getElementById('far_al').value) || 0; // anak lelaki
+    const ap = parseInt(document.getElementById('far_ap').value) || 0; // anak perempuan
+
+    const datuk = parseInt(document.getElementById("far_datuk")?.value) || 0;
+
+    const adikLelaki = parseInt(document.getElementById("far_alb")?.value) || 0;
+    const adikPerempuan = parseInt(document.getElementById("far_apb")?.value) || 0;
+
+    const hasChild = (al + ap) > 0;
+    const hasSiblings = (adikLelaki + adikPerempuan) >= 2;
+
+    let results = [];
+    const BASE = 24;
+
+    // ===============================
+    // 1. FARDU (SPOUSE + PARENTS)
+    // ===============================
+    if (isteriCount > 0) {
+        results.push({
+            name: isteriCount > 1 ? `${isteriCount} Isteri` : 'Isteri',
+            share: hasChild ? 3 : 6, // 1/8 or 1/4
+            base: BASE,
+            type: 'Fardu',
+            color: 'bg-teal-500'
+        });
+    }
+
+    if (suamiCount > 0) {
+        results.push({
+            name: 'Suami',
+            share: hasChild ? 6 : 12, // 1/4 or 1/2
+            base: BASE,
+            type: 'Fardu',
+            color: 'bg-teal-500'
+        });
+    }
+
+    if (bapa > 0) {
+        results.push({
+            name: 'Bapa',
+            share: 4, // 1/6
+            base: BASE,
+            type: 'Fardu',
+            color: 'bg-blue-500'
+        });
+    }
+
+    if (ibu > 0) {
+        let ibuShare = (hasChild || hasSiblings) ? 4 : 8; // 1/6 or 1/3
+        results.push({
+            name: 'Ibu',
+            share: ibuShare,
+            base: BASE,
+            type: 'Fardu',
+            color: 'bg-blue-500'
+        });
+    }
+
+    let sumFardu = results.reduce((acc, r) => acc + r.share, 0);
+    let remaining = BASE - sumFardu;
+
+    // ===============================
+    // 2. ANAK-ANAK (ASABAH)
+    // ===============================
+    if (al > 0 || ap > 0) {
+
+        if (al === 0) {
+            // hanya anak perempuan
+            let share = ap === 1 ? 12 : 16; // 1/2 or 2/3
+
+            results.push({
+                name: ap > 1 ? `${ap} Anak Perempuan` : 'Anak Perempuan',
+                share: share,
+                base: BASE,
+                type: 'Fardu',
+                color: 'bg-pink-500'
+            });
+
+            remaining -= share;
+
+        } else {
+            // lelaki + perempuan (2:1)
+            let totalParts = (al * 2) + ap;
+
+            if (remaining > 0 && totalParts > 0) {
+
+                let shareAL = (remaining * (al * 2)) / totalParts;
+                let shareAP = (remaining * ap) / totalParts;
+
+                if (al > 0) {
+                    results.push({
+                        name: al > 1 ? `${al} Anak Lelaki` : 'Anak Lelaki',
+                        share: shareAL,
+                        base: BASE,
+                        type: 'Asabah',
+                        color: 'bg-indigo-500'
+                    });
+                }
+
+                if (ap > 0) {
+                    results.push({
+                        name: ap > 1 ? `${ap} Anak Perempuan` : 'Anak Perempuan',
+                        share: shareAP,
+                        base: BASE,
+                        type: 'Asabah',
+                        color: 'bg-pink-500'
+                    });
+                }
+
+                remaining = 0;
+            }
+        }
+    }
+
+    // ===============================
+    // 3. BAKI (BAITULMAL / ASABAH LAIN)
+    // ===============================
+    if (remaining > 0 && al === 0 && bapa === 0) {
+
+        if (datuk > 0) {
+            results.push({
+                name: 'Datuk',
+                share: remaining,
+                base: BASE,
+                type: 'Asabah (Waris Ganti)',
+                color: 'bg-indigo-400'
+            });
+
+        } else if (adikLelaki > 0 || adikPerempuan > 0) {
+
+            let totalParts = (adikLelaki * 2) + adikPerempuan;
+
+            if (totalParts > 0) {
+
+                if (adikLelaki > 0) {
+                    results.push({
+                        name: adikLelaki > 1 ? `${adikLelaki} Adik Lelaki` : 'Adik Lelaki',
+                        share: (remaining * (adikLelaki * 2)) / totalParts,
+                        base: BASE,
+                        type: 'Asabah (Waris Ganti)',
+                        color: 'bg-purple-500'
+                    });
+                }
+
+                if (adikPerempuan > 0) {
+                    results.push({
+                        name: adikPerempuan > 1 ? `${adikPerempuan} Adik Perempuan` : 'Adik Perempuan',
+                        share: (remaining * adikPerempuan) / totalParts,
+                        base: BASE,
+                        type: 'Asabah (Waris Ganti)',
+                        color: 'bg-purple-400'
+                    });
+                }
+            }
+
+        } else {
+            results.push({
+                name: 'Baitulmal',
+                share: remaining,
+                base: BASE,
+                type: 'Baki',
+                color: 'bg-slate-400'
+            });
+        }
+    }
+
+    renderFaraidTable(results);
+}
+
+
+// ===============================
+// RENDER TABLE (FIXED FRACTION)
+// ===============================
+function renderFaraidTable(results) {
+    const resultContainer = document.getElementById('pokok-waris-result');
+    if (!resultContainer) return;
+
+    if (results.length === 0) {
+        resultContainer.innerHTML = `
+            <div class="p-8 text-center text-gray-400 text-sm">
+                Sila kemaskini maklumat waris untuk melihat agihan.
+            </div>`;
+        return;
+    }
+
+    let html = `
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-[10px] uppercase font-bold text-gray-500 tracking-wider">
+                    <th class="px-4 py-3">Waris / Kategori</th>
+                    <th class="px-4 py-3 text-center">Pecahan</th>
+                    <th class="px-4 py-3 text-right">Peratus</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+    `;
+
+    results.forEach(r => {
+
+        let perc = ((r.share / r.base) * 100).toFixed(1);
+
+        html += `
+            <tr class="hover:bg-gray-50 transition-colors">
+                <td class="px-4 py-3">
+                    <div class="flex flex-col">
+                        <span class="font-bold text-[#153638] text-xs md:text-sm">${r.name}</span>
+                        <span class="text-[9px] font-semibold text-gray-400 uppercase">${r.type}</span>
+                    </div>
+                </td>
+
+                <td class="px-4 py-3 text-center">
+                    <span class="inline-block bg-gray-100 text-[#153638] font-mono font-bold px-2 py-0.5 rounded text-xs">
+                        ${r.share}/${r.base}
+                    </span>
+                </td>
+
+                <td class="px-4 py-3 text-right">
+                    <div class="flex flex-col items-end">
+                        <span class="font-bold text-gray-700 text-xs">${perc}%</span>
+                        <div class="w-10 h-1 bg-gray-100 rounded-full mt-1 overflow-hidden">
+                            <div class="${r.color} h-full" style="width:${perc}%"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += `</tbody></table>`;
+    resultContainer.innerHTML = html;
+
+    lucide.createIcons();
+}
+
+
+// ===============================
+// TOGGLE WARIS EXTENDED
+// ===============================
+function toggleWaris() {
+    let al = parseInt(document.getElementById('far_al').value) || 0;
+    let bapa = parseInt(document.getElementById('far_bapa').value) || 0;
+
+    let extWaris = document.getElementById('extended_waris_section');
+
+    if (extWaris) {
+        if (al > 0 || bapa > 0) {
+            extWaris.classList.add('hidden');
+        } else {
+            extWaris.classList.remove('hidden');
+        }
+    }
+
+    calculateFaraid();
 }
 
   </script>
+  <script>
+document.addEventListener("submit", function(e) {
+
+  if (e.target && e.target.id === "leadFormWasiat") {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch("https://script.google.com/macros/s/AKfycbxTQJGoneHXIe4CSL4pjgP5EW7ogedrKzywydLuUFbC2P24-gb0kefO8fvOFnnZsIUH3A/exec", {
+      method: "POST",
+      body: formData,
+      mode: "no-cors"
+    });
+
+    alert("Berjaya hantar!");
+    form.reset();
+  }
+});
+</script>
 </body>
 </html>
