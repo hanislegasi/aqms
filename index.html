@@ -77,13 +77,14 @@
             <!-- Dynamic Details -->
             <div id="content-details" class="prose prose-lg max-w-none text-gray-600"></div>
             
-            <div class="mt-10 pt-6 border-t border-gray-100">
-              <button onclick="window.open('https://wa.me/60129443846?text=Saya%20nak%20tanya%20tentang%20perwarisan%20harta%20Islam', '_blank')"
-class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
-style="background-color: #153638;">
-  Hubungi Perunding Sekarang 
-  <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
-</button>
+            <!-- BUTANG HUBUNGI PERUNDING DENGAN PEMETAAN DINAMIK -->
+            <div id="contact-button-container" class="mt-10 pt-6 border-t border-gray-100">
+              <button onclick="hubungiPerunding()"
+                class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
+                style="background-color: #153638;">
+                Hubungi Perunding Sekarang 
+                <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
+              </button>
             </div>
           </div>
           
@@ -393,7 +394,9 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
         details: `
           <div class="space-y-4 text-gray-700 font-inter text-justify">
             <p><strong>FARAID</strong> merupakan kaedah pembahagian harta pusaka dalam Islam yang telah ditetapkan dengan jelas, di mana setiap waris menerima bahagian tertentu berdasarkan hubungan kekeluargaan.</p>
-            <p>Sebagai contoh, jika si mati meninggalkan seorang isteri dan anak-anak, isteri akan menerima 1/8 (12.5%) daripada harta pusaka jika ada anak, manakala baki diagihkan kepada anak-anak dengan nisbah anak lelaki 2 bahagian dan anak perempuan 1 bahagian.</p>
+            <p>Agihan ini melibatkan waris seperti pasangan (suami/isteri), anak-anak, ibu bapa dan waris lain yang layak.</p>
+          <p>Sebagaimana firman Allah SWT dalam Surah An-Nisa ayat 11:<br/>
+            <strong>"Allah mensyariatkan bagimu tentang (pembahagian pusaka untuk) anak-anakmu, iaitu bahagian seorang anak lelaki sama dengan bahagian dua orang anak perempuan..."</strong></p>
           </div>
 
 
@@ -444,12 +447,31 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
                     </div>
                 </div>
 
-                <!-- 3. WARIS GANTI/KEDUA (Auto-show if needed) -->
+                <!-- 3. WARIS GANTI / KEDUA -->
                 <div id="extended_waris_section" class="bg-orange-50 p-4 rounded-xl border border-orange-100 hidden">
-                    <h4 class="font-bold text-orange-800 text-xs mb-2 uppercase tracking-tight flex items-center">
+                    <h4 class="font-bold text-orange-800 text-xs mb-3 uppercase tracking-tight flex items-center">
                        <i data-lucide="info" class="w-3 h-3 mr-1"></i> Waris Ganti / Lapis Kedua
                     </h4>
-                    <p class="text-[11px] text-orange-700 leading-tight">Disebabkan ketiadaan Anak Lelaki atau Bapa, baki harta berpotensi diwarisi oleh waris lapis kedua (Adik-beradik/Cucu/Datuk). Hubungi pakar kami untuk perincian penuh.</p>
+                    <p class="text-[11px] text-orange-700 leading-tight mb-4">Disebabkan ketiadaan Anak Lelaki dan Ibu/Bapa, sila isi waris ganti (Datuk/Nenek) atau waris lapis kedua (Adik-beradik) jika ada.</p>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <label class="font-medium text-xs text-orange-900">Datuk (Ganti Bapa)</label>
+                            <input type="number" id="far_datuk" min="0" max="1" value="0" class="border border-orange-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="font-medium text-xs text-orange-900">Nenek (Ganti Ibu)</label>
+                            <input type="number" id="far_nenek" min="0" max="2" value="0" class="border border-orange-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="font-medium text-xs text-orange-900">Adik Beradik Lelaki</label>
+                            <input type="number" id="far_alb" min="0" value="0" class="border border-orange-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="font-medium text-xs text-orange-900">Adik Beradik Perempuan</label>
+                            <input type="number" id="far_apb" min="0" value="0" class="border border-orange-300 rounded-lg px-3 py-1 w-20 text-center text-sm focus:ring-2 focus:ring-[#d8ae81] outline-none" oninput="toggleWaris()">
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- 4. KEPUTUSAN JADUAL PREMIUM -->
@@ -589,6 +611,24 @@ Pendekatan ini bukan sahaja meningkatkan kesedaran dan literasi kewarisan, malah
     let isMobileMenuOpen = false;
     let logoError = false;
 
+    // FUNGSI HUBUNGI PERUNDING (PEMETAAN KUMPULAN)
+    function hubungiPerunding() {
+      let nomborTelefon = "60129443846"; // Default (Kumpulan 1)
+
+      // Pemetaan Nombor
+      if (['utama', 'wasiat', 'hibah', 'mytadbir'].includes(activeTab)) {
+        nomborTelefon = "60129443846"; // Kumpulan 1
+      } else if (['harta_sepencarian', 'lain_lain'].includes(activeTab)) {
+        nomborTelefon = "60108182937"; // Kumpulan 2
+      } else if (['faraid', 'urus_pusaka'].includes(activeTab)) {
+        nomborTelefon = "60142374988"; // Kumpulan 3
+      }
+
+      const mesejTeks = encodeURIComponent('Saya nak tanya tentang perwarisan harta Islam');
+      window.open(`https://wa.me/${nomborTelefon}?text=${mesejTeks}`, '_blank');
+    }
+
+
     // FUNGSI RENDER
     function renderApp() {
       const currentContent = contentData[activeTab];
@@ -726,6 +766,7 @@ function calculateFaraid() {
     const ap = parseInt(document.getElementById('far_ap').value) || 0; // anak perempuan
 
     const datuk = parseInt(document.getElementById("far_datuk")?.value) || 0;
+    const nenek = parseInt(document.getElementById("far_nenek")?.value) || 0;
 
     const adikLelaki = parseInt(document.getElementById("far_alb")?.value) || 0;
     const adikPerempuan = parseInt(document.getElementById("far_apb")?.value) || 0;
@@ -734,7 +775,7 @@ function calculateFaraid() {
     const hasSiblings = (adikLelaki + adikPerempuan) >= 2;
 
     let results = [];
-    const BASE = 24;
+    let BASE = 24;
 
     // ===============================
     // 1. FARDU (SPOUSE + PARENTS)
@@ -759,16 +800,6 @@ function calculateFaraid() {
         });
     }
 
-    if (bapa > 0) {
-        results.push({
-            name: 'Bapa',
-            share: 4, // 1/6
-            base: BASE,
-            type: 'Fardu',
-            color: 'bg-blue-500'
-        });
-    }
-
     if (ibu > 0) {
         let ibuShare = (hasChild || hasSiblings) ? 4 : 8; // 1/6 or 1/3
         results.push({
@@ -778,32 +809,73 @@ function calculateFaraid() {
             type: 'Fardu',
             color: 'bg-blue-500'
         });
+    } else if (nenek > 0) {
+        results.push({
+            name: 'Nenek',
+            share: 4, // 1/6
+            base: BASE,
+            type: 'Waris Ganti (Ibu)',
+            color: 'bg-blue-400'
+        });
+    }
+
+    if (bapa > 0) {
+        results.push({
+            name: 'Bapa',
+            share: 4, // 1/6
+            base: BASE,
+            type: 'Fardu',
+            color: 'bg-blue-600'
+        });
+    } else if (datuk > 0) {
+        results.push({
+            name: 'Datuk',
+            share: 4, // 1/6
+            base: BASE,
+            type: 'Waris Ganti (Bapa)',
+            color: 'bg-indigo-400'
+        });
     }
 
     let sumFardu = results.reduce((acc, r) => acc + r.share, 0);
     let remaining = BASE - sumFardu;
 
+    // AUL (Penyebut meningkat jika jumlah fardu melebihi asalnya)
+    if (remaining < 0) {
+        results.forEach(r => r.base = sumFardu);
+        remaining = 0;
+        BASE = sumFardu;
+    }
+
     // ===============================
-    // 2. ANAK-ANAK (ASABAH)
+    // 2. ANAK-ANAK (ASABAH/FARDU)
     // ===============================
     if (al > 0 || ap > 0) {
 
         if (al === 0) {
-            // hanya anak perempuan
+            // hanya anak perempuan (Fardu)
             let share = ap === 1 ? 12 : 16; // 1/2 or 2/3
-
-            results.push({
-                name: ap > 1 ? `${ap} Anak Perempuan` : 'Anak Perempuan',
-                share: share,
-                base: BASE,
-                type: 'Fardu',
-                color: 'bg-pink-500'
-            });
-
-            remaining -= share;
+            
+            // Pengiraan semula kes Aul (ika baki kurang dari apa yang anak patut dapat)
+            if (remaining < share) {
+                sumFardu += share;
+                results.push({
+                    name: ap > 1 ? `${ap} Anak Perempuan` : 'Anak Perempuan',
+                    share: share, base: sumFardu, type: 'Fardu', color: 'bg-pink-500'
+                });
+                results.forEach(r => r.base = sumFardu);
+                BASE = sumFardu;
+                remaining = 0;
+            } else {
+                results.push({
+                    name: ap > 1 ? `${ap} Anak Perempuan` : 'Anak Perempuan',
+                    share: share, base: BASE, type: 'Fardu', color: 'bg-pink-500'
+                });
+                remaining -= share;
+            }
 
         } else {
-            // lelaki + perempuan (2:1)
+            // lelaki + perempuan Asabah Bil Ghayr (2:1)
             let totalParts = (al * 2) + ap;
 
             if (remaining > 0 && totalParts > 0) {
@@ -837,19 +909,22 @@ function calculateFaraid() {
     }
 
     // ===============================
-    // 3. BAKI (BAITULMAL / ASABAH LAIN)
+    // 3. BAKI (ASABAH LAIN / BAITULMAL)
     // ===============================
-    if (remaining > 0 && al === 0 && bapa === 0) {
-
-        if (datuk > 0) {
-            results.push({
-                name: 'Datuk',
-                share: remaining,
-                base: BASE,
-                type: 'Asabah (Waris Ganti)',
-                color: 'bg-indigo-400'
-            });
-
+    if (remaining > 0) {
+        
+        if (bapa > 0) {
+            let b = results.find(r => r.name === 'Bapa');
+            b.share += remaining;
+            b.type = 'Fardu + Asabah';
+            remaining = 0;
+            
+        } else if (datuk > 0) {
+            let d = results.find(r => r.name === 'Datuk');
+            d.share += remaining;
+            d.type = 'Fardu + Asabah';
+            remaining = 0;
+            
         } else if (adikLelaki > 0 || adikPerempuan > 0) {
 
             let totalParts = (adikLelaki * 2) + adikPerempuan;
@@ -858,23 +933,25 @@ function calculateFaraid() {
 
                 if (adikLelaki > 0) {
                     results.push({
-                        name: adikLelaki > 1 ? `${adikLelaki} Adik Lelaki` : 'Adik Lelaki',
+                        name: adikLelaki > 1 ? `${adikLelaki} Adik Beradik Lelaki` : 'Adik Beradik Lelaki',
                         share: (remaining * (adikLelaki * 2)) / totalParts,
                         base: BASE,
-                        type: 'Asabah (Waris Ganti)',
-                        color: 'bg-purple-500'
+                        type: 'Asabah (Waris Kedua)',
+                        color: 'bg-purple-600'
                     });
                 }
 
                 if (adikPerempuan > 0) {
                     results.push({
-                        name: adikPerempuan > 1 ? `${adikPerempuan} Adik Perempuan` : 'Adik Perempuan',
+                        name: adikPerempuan > 1 ? `${adikPerempuan} Adik Beradik Perempuan` : 'Adik Beradik Perempuan',
                         share: (remaining * adikPerempuan) / totalParts,
                         base: BASE,
-                        type: 'Asabah (Waris Ganti)',
+                        type: 'Asabah (Waris Kedua)',
                         color: 'bg-purple-400'
                     });
                 }
+                
+                remaining = 0;
             }
 
         } else {
@@ -885,6 +962,7 @@ function calculateFaraid() {
                 type: 'Baki',
                 color: 'bg-slate-400'
             });
+            remaining = 0;
         }
     }
 
@@ -934,7 +1012,7 @@ function renderFaraidTable(results) {
 
                 <td class="px-4 py-3 text-center">
                     <span class="inline-block bg-gray-100 text-[#153638] font-mono font-bold px-2 py-0.5 rounded text-xs">
-                        ${r.share}/${r.base}
+                        ${Math.round(r.share * 100) / 100}/${r.base}
                     </span>
                 </td>
 
@@ -963,14 +1041,16 @@ function renderFaraidTable(results) {
 function toggleWaris() {
     let al = parseInt(document.getElementById('far_al').value) || 0;
     let bapa = parseInt(document.getElementById('far_bapa').value) || 0;
+    let ibu = parseInt(document.getElementById('far_ibu').value) || 0;
 
     let extWaris = document.getElementById('extended_waris_section');
 
     if (extWaris) {
-        if (al > 0 || bapa > 0) {
-            extWaris.classList.add('hidden');
-        } else {
+        // Tunjuk panel waris ganti jika ketiadaan anak lelaki DAN ketiadaan bapa/ibu
+        if (al === 0 && (bapa === 0 || ibu === 0)) {
             extWaris.classList.remove('hidden');
+        } else {
+            extWaris.classList.add('hidden');
         }
     }
 
