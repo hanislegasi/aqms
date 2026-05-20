@@ -54,12 +54,16 @@
 
   <!-- HERO BANNER -->
   <div class="relative pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden font-inter" style="background-color: #153638;">
-    <div class="relative max-w-7xl mx-auto px-4 text-center">
-      
-      <!-- Hero Icon / Logo -->
-      <div id="hero-media"></div>
+    
+     <!-- LATAR BELAKANG GAMBAR (Telah dibaiki: Opacity 55% supaya gambar nampak jelas) -->
+    <div id="hero-bg-image" class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-50 transition-all duration-700"></div>
+    
+    <!-- Lapisan penggelap (gradient) dari bawah ke atas supaya teks putih mudah dibaca -->
+    <div class="absolute inset-0 z-0 bg-gradient-to-t from-[#153638] via-[#153638]/60 to-transparent opacity-60"></div>
 
-      <!-- Hero Text -->
+
+    <div class="relative max-w-7xl mx-auto px-4 text-center z-10">
+      <div id="hero-media"></div>
       <h1 class="text-3xl tracking-tight font-extrabold text-white sm:text-5xl lg:text-6xl mb-6">
         <span class="block" id="hero-title"></span>
         <span class="block mt-2 text-2xl md:text-3xl font-medium" style="color: #d8ae81;" id="hero-subtitle"></span>
@@ -168,6 +172,7 @@
     const contentData = {
       utama: {
         id: 'utama',
+        bgImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=2000', // Gambar sign dokumen umum
         title: 'Laman Utama',
         iconName: 'book-open',
         hero: 'Pakar Perundingan Pewarisan Islam Anda',
@@ -206,7 +211,7 @@
               <div class="space-y-4 text-gray-700 leading-relaxed font-inter text-justify">
             <p>
               Dapatkan khidmat nasihat mengenai Perancangan Harta Pusaka
-Rundingan PERCUMA bersama Perunding kami. Sila lengkapkan borang berikut:
+Rundingan PERCUMA bersama Perunding kami. Sila lengkapkan borang berikut (sila isi tarikh ikut kelapangan anda):
             </p>
             </div>
             <form id="leadFormWasiat" class="space-y-3 mt-6">
@@ -230,6 +235,7 @@ Rundingan PERCUMA bersama Perunding kami. Sila lengkapkan borang berikut:
   <option value="Unit Amanah">Unit Amanah</option>
   <option value="Pembiayaan">Pembiayaan</option>
   <option value="RAK">Rakan Agensi Korporat</option>
+  <option value="Kerjaya">Kerjaya Perunding</option>
 </select>
 
 <!-- KAEDAH HUBUNGI (Dropdown) -->
@@ -257,6 +263,7 @@ Rundingan PERCUMA bersama Perunding kami. Sila lengkapkan borang berikut:
       },
       wasiat: {
         id: 'wasiat',
+        bgImage: 'https://i.postimg.cc/FHygMn4G/Chat-GPT-Image-May-20-2026-12-33-45-PM.png', // Gambar penulisan/pen
         title: 'Wasiat',
         iconName: 'scroll-text',
         hero: 'Rancang Agihan Harta & Pesanan Terakhir',
@@ -310,6 +317,7 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
       },
        hibah: {
         id: 'hibah',
+        bgImage: 'https://i.postimg.cc/mZPnvR67/Chat-GPT-Image-May-20-2026-12-34-20-PM.png', // Gambar keluarga/tangan (kasih sayang)
         title: 'Hibah',
         iconName: 'gift',
         hero: 'Hadiah Kasih Sayang Tanpa Syarat',
@@ -371,6 +379,7 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
       },
       harta_sepencarian: {
         id: 'harta_sepencarian',
+        bgImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=2000', // Gambar rumah/pasangan (harta bersama)
         title: 'Harta Sepencarian',
         iconName: 'users',
         hero: 'Hak Bersama Suami Isteri',
@@ -387,6 +396,7 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
       },
       faraid: {
         id: 'faraid',
+         bgImage: 'https://i.postimg.cc/ZqDcHvZC/Chat-GPT-Image-May-20-2026-12-38-10-PM.png', // Gambar undang-undang/neraca (scale)
         title: 'Faraid',
         iconName: 'scale',
         hero: 'Hukum Pembahagian Syarak',
@@ -490,20 +500,92 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
       },
       urus_pusaka: {
         id: 'urus_pusaka',
+        bgImage: 'https://i.postimg.cc/d3QV03kL/Chat-GPT-Image-May-20-2026-12-42-32-PM.png', // Gambar fail/dokumen pengurusan
         title: 'Urus Pusaka',
         iconName: 'briefcase',
         hero: 'Kemudahan Pentadbiran Pusaka',
         description: 'Kami memudahkan urusan birokrasi dan pentadbiran pusaka agar waris tidak terbeban.',
-        details: `
+details: `
           <div class="space-y-4 text-gray-700 font-inter text-justify">
-            <p>Kami membantu dari penyediaan Surat Kuasa Mentadbir sehinggalah pengagihan aset kepada waris.</p>
-            <li class="flex items-start space-x-2"><span class="mt-1 flex-shrink-0">&bull;</span><span><strong>Pengurusan Pusaka – Kaunseling Waris:</strong> Memberikan perkhidmatan kaunseling yang komprehensif kepada pihak waris atau ahli keluarga bagi membantu mereka memahami segala aspek berkaitan pengurusan pusaka. Ini termasuk penerangan mengenai prosedur, hak waris, pembahagian harta, serta langkah-langkah yang perlu diambil bagi memastikan proses berjalan dengan lancar. Pendekatan yang digunakan adalah mesra, telus dan berfokus kepada penyelesaian agar setiap waris dapat membuat keputusan yang tepat tanpa kekeliruan.</span></li>
-            <li class="flex items-start space-x-2"><span class="mt-1 flex-shrink-0">&bull;</span><span><strong>Pengurusan Pentadbiran:</strong> Mengurus dan menyelaras segala urusan pentadbiran berkaitan tuntutan dan pembahagian pusaka sama ada di Pejabat Pusaka Kecil atau di Mahkamah Tinggi. Perkhidmatan ini merangkumi penyediaan dokumen, pemfailan kes, pemantauan proses, serta komunikasi dengan pihak berkuasa berkaitan bagi memastikan setiap prosedur dipatuhi dengan betul. Matlamatnya adalah untuk memudahkan urusan waris serta mempercepatkan penyelesaian kes secara sistematik dan efisien.</span></li>
-          </div>
+              <p class="text-[#C8A97E] font-semibold tracking-[0.2em] uppercase mb-3">
+      Tahukah Anda?
+    </p>
+
+    <h2 class="text-lg md:text-lg font-bold leading-tight mb-6">
+      Lebih RM90 Bilion<br>
+      Harta Pusaka Masih Beku Di Malaysia
+    </h2>
+
+<p class="text-md text-gray-700 leading-relaxed mb-8 text-justify">
+  Ramai hanya mula urus pusaka selepas kematian berlaku.
+  Ketika itu proses menjadi lebih rumit, memakan masa dan
+  boleh menyebabkan konflik sesama waris.
+</p>
+
+<div class="grid md:grid-cols-3 gap-4 mb-10">
+
+   <div class="bg-[#153638] p-5 rounded-2xl shadow-md">
+    <p class="text-md text-white leading-relaxed text-center">
+      Rumah tidak boleh dipindah milik
+    </p>
+  </div>
+
+  <div class="bg-[#153638] p-5 rounded-2xl shadow-md">
+    <p class="text-md text-white leading-relaxed text-center">
+      Akaun bank dibekukan
+    </p>
+  </div>
+
+  <div class="bg-[#153638] p-5 rounded-2xl shadow-md">
+    <p class="text-md text-white leading-relaxed text-center">
+      Waris terpaksa urus di mahkamah
+    </p>
+  </div>
+
+</div>
+
+<div class="bg-white/10 border border-gray-200 rounded-2xl p-6 mb-10 space-y-5">
+
+  <p class="text-md text-gray-700 leading-relaxed text-justify">
+    Sama ada anda ingin membuat perancangan awal
+    atau harta keluarga sudah pun menjadi harta beku,
+    kami sedia membantu anda mengurus proses pusaka
+    dengan lebih mudah, teratur dan mengikut syarak.
+  </p>
+
+  <p class="text-md text-gray-700 leading-relaxed text-justify">
+    Kami membantu dari penyediaan Surat Kuasa Mentadbir
+    sehinggalah pengagihan aset kepada waris.
+  </p>
+
+  <ul class="space-y-4">
+
+    <li class="flex items-start space-x-3">
+      <span class="mt-2 w-2 h-2 rounded-full bg-[#153638] flex-shrink-0"></span>
+
+      <p class="text-md text-gray-700 leading-relaxed text-justify">
+        <strong>Pengurusan Pusaka – Kaunseling Waris:</strong>
+        Memberikan perkhidmatan kaunseling yang komprehensif kepada pihak waris atau ahli keluarga bagi membantu mereka memahami segala aspek berkaitan pengurusan pusaka. <br><br>Ini termasuk penerangan mengenai prosedur, hak waris, pembahagian harta serta langkah-langkah yang perlu diambil bagi memastikan proses berjalan dengan lancar.
+      </p>
+    </li>
+
+    <li class="flex items-start space-x-3">
+      <span class="mt-2 w-2 h-2 rounded-full bg-[#153638] flex-shrink-0"></span>
+
+      <p class="text-md text-gray-700 leading-relaxed text-justify">
+        <strong>Pengurusan Pentadbiran:</strong>
+        Mengurus dan menyelaras segala urusan pentadbiran berkaitan tuntutan dan pembahagian pusaka sama ada di Pejabat Pusaka Kecil atau Mahkamah Tinggi. <br><br>Perkhidmatan ini merangkumi penyediaan dokumen, pemfailan kes, pemantauan proses serta komunikasi dengan pihak berkuasa berkaitan.
+      </p>
+    </li>
+
+  </ul>
+
+</div>
         `
       },
       mytadbir: {
         id: 'mytadbir',
+        bgImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000', // Gambar kalkulator / komputer rancangan kewangan
         title: 'MyTadbir',
         iconName: 'calculator',
         hero: 'Sistem Pengurusan Harta Pintar',
@@ -533,6 +615,7 @@ Tanpa wasiat, harta anda boleh dibekukan dan proses pembahagian jadi lebih rumit
       },
       lain_lain: {
         id: 'lain_lain',
+        bgImage: 'https://i.postimg.cc/wv7WYcFk/Chat-GPT-Image-May-20-2026-12-36-18-PM.png', // Gambar mesyuarat/korporat
         title: 'Lain-lain Servis',
         iconName: 'file-text',
         hero: 'Penyelesaian Holistik & Korporat',
@@ -571,7 +654,7 @@ Berfungsi sebagai jaringan keselamatan kewangan, di mana wang tunai ditempatkan 
           <span class="mt-1 flex-shrink-0">&bull;</span>
           <span>
             <strong>Unit Amanah:</strong>
-           Pelaburan strategik untuk pertumbuhan aset jangka panjang. Sesuai dijadikan dana terkumpul bagi tujuan pewarisan dan kestabilan kewangan generasi seterusnya.
+           elaburan strategik untuk pertumbuhan aset jangka panjang. Sesuai dijadikan dana terkumpul bagi tujuan pewarisan dan kestabilan kewangan generasi seterusnya.
           </span>
         </li>
 
@@ -632,6 +715,10 @@ Pendekatan ini bukan sahaja meningkatkan kesedaran dan literasi kewarisan, malah
     // FUNGSI RENDER
     function renderApp() {
       const currentContent = contentData[activeTab];
+
+// SET HERO BACKGROUND IMAGE
+const heroBg = document.getElementById('hero-bg-image');
+heroBg.style.backgroundImage = `url('${currentContent.bgImage}')`;
 
       // 1. Render Desktop Nav
       const desktopNav = document.getElementById('desktop-nav');
