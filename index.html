@@ -129,16 +129,15 @@ pewarisan harta islam
             <!-- Dynamic Details -->
             <div id="content-details" class="prose prose-lg max-w-none text-gray-600"></div>
             
-            <!-- BUTANG HUBUNGI PERUNDING DENGAN PEMETAAN DINAMIK -->
+            <!-- BUTANG HUBUNGI PERUNDING DENGAN PAUTAN KE AQC.HTML -->
             <div id="contact-button-container" class="mt-10 pt-6 border-t border-gray-100">
-              <button onclick="hubungiPerunding()"
+              <a href="https://aqms.alqawthar.my/aqc.html" target="_blank"
                 class="inline-flex items-center px-8 py-3 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
                 style="background-color: #153638;">
-                Hubungi Perunding Sekarang 
-                <i data-lucide="chevron-right" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
-              </button>
+                Cari Perunding Berdekatan
+                <i data-lucide="map-pin" class="ml-2 w-5 h-5" style="color: #d8ae81;"></i>
+              </a>
             </div>
-          </div>
           
           <!-- Sidebar Nav -->
           <aside class="hidden md:block w-64 flex-shrink-0">
@@ -715,22 +714,7 @@ Pendekatan ini bukan sahaja meningkatkan kesedaran dan literasi kewarisan, malah
     let isMobileMenuOpen = false;
     let logoError = false;
 
-    // FUNGSI HUBUNGI PERUNDING (PEMETAAN KUMPULAN)
-    function hubungiPerunding() {
-      let nomborTelefon = "60129443846"; // Default (Kumpulan 1)
-
-      // Pemetaan Nombor
-      if (['utama', 'isu', 'solusi', 'mytadbir'].includes(activeTab)) {
-        nomborTelefon = "60129443846"; // Kumpulan 1
-      } else if (['lain_lain'].includes(activeTab)) {
-        nomborTelefon = "60108182937"; // Kumpulan 2
-      } else if (['faraid'].includes(activeTab)) {
-        nomborTelefon = "60142374988"; // Kumpulan 3
-      }
-
-      const mesejTeks = encodeURIComponent('Saya nak tanya tentang perwarisan harta Islam');
-      window.open(`https://wa.me/${nomborTelefon}?text=${mesejTeks}`, '_blank');
-    }
+    
 
 
     // FUNGSI RENDER
