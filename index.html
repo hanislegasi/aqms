@@ -1685,19 +1685,46 @@ heroBg.style.backgroundImage = `url('${currentContent.bgImage}')`;
         mobileNav.classList.add('hidden');
       }
 
-      // 3. Render Hero Content
-      document.getElementById('hero-title').innerText = currentContent.title;
-      document.getElementById('hero-subtitle').innerText = currentContent.hero;
-      document.getElementById('hero-desc').innerText = currentContent.description;
-      
+// 3. Render Hero Content
+      const heroTitle = document.getElementById('hero-title');
+      const heroSubtitle = document.getElementById('hero-subtitle');
+      const heroDesc = document.getElementById('hero-desc');
       const heroMedia = document.getElementById('hero-media');
-      heroMedia.innerHTML = `
-        <div class="flex justify-center mb-6">
-          <div class="p-4 rounded-full bg-white/5 border border-white/10 shadow-lg text-[#d8ae81] scale-150 transform transition-transform">
-            <i data-lucide="${currentContent.iconName}" class="w-6 h-6"></i>
+
+      if (activeTab === 'dari_meja_pu') {
+        // --- SUSUNAN KHAS: DARI MEJA PU ---
+        heroMedia.style.display = 'none'; // Sembunyikan ikon yang duduk di atas
+        
+        // Gabungkan Ikon & Teks bersebelahan, tolak ke bawah (mt-32 / mt-40)
+        heroTitle.innerHTML = `
+          <div class="flex items-center justify-center gap-4 mt-32 md:mt-40">
+            <div class="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full border border-[#d8ae81]/50 bg-black/20 backdrop-blur-sm shadow-lg text-[#d8ae81]">
+              <i data-lucide="${currentContent.iconName}" class="w-6 h-6 md:w-8 md:h-8"></i>
+            </div>
+            <span class="text-white">${currentContent.title}</span>
           </div>
-        </div>
-      `;
+        `;
+        
+        // Kosongkan subtitle & description untuk page ini
+        heroSubtitle.innerText = '';
+        heroDesc.innerText = '';
+
+      } else {
+        // --- SUSUNAN ASAL: UNTUK PAGE LAIN (Utama, Faraid, Isu dll) ---
+        heroMedia.style.display = 'block'; // Papar semula kotak ikon atas
+        
+        heroTitle.innerText = currentContent.title;
+        heroSubtitle.innerText = currentContent.hero;
+        heroDesc.innerText = currentContent.description;
+        
+        heroMedia.innerHTML = `
+          <div class="flex justify-center mb-6">
+            <div class="p-4 rounded-full bg-white/5 border border-white/10 shadow-lg text-[#d8ae81] scale-150 transform transition-transform">
+              <i data-lucide="${currentContent.iconName}" class="w-6 h-6"></i>
+            </div>
+          </div>
+        `;
+      }
 
       // 4. Render Main Details & Sidebar
       document.getElementById('content-details').innerHTML = currentContent.details;
