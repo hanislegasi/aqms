@@ -1050,10 +1050,10 @@ faraid: {
         Perancangan bukan untuk menjangka bila kita akan pergi.
         Ia tentang menyediakan keluarga sebelum tiba waktunya.
 
-      </p>
+      </p></p>
 
     <button
-      onclick="setActiveTab('isu')"
+      onclick="setActiveTab('solusi')"
       class="w-full p-6 rounded-2xl text-left border-2 bg-white transition-all hover:shadow-lg hover:scale-[1.01]"
       style="border-color: ${theme.primary}"
     >
@@ -1085,21 +1085,7 @@ faraid: {
       </div>
 
     </button>
-      <button
-        onclick="setActiveTab('solusi')"
-        class="mt-6 inline-flex items-center px-8 py-4 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
-        style="background-color: ${theme.primary}"
-      >
-
-        Lihat Jalan Perancangannya
-
-        <i data-lucide="arrow-right"
-           class="ml-2 w-5 h-5"
-           style="color: ${theme.accent}">
-        </i>
-
-      </button>
-
+      
     </div>
 
   </div>
@@ -1460,7 +1446,45 @@ description: 'Memahami harta, waris dan instrumen perancangan supaya legasi yang
                 <strong>Perancangan hari ini boleh membantu mengurangkan kekeliruan esok.</strong>
               </p>
             </div>
+  
+  <!-- CTA KE MEJA PU -->
+  <div class="mt-8">
 
+    <button
+      onclick="setActiveTab('dari_meja_pu')"
+      class="w-full p-6 rounded-2xl text-left border-2 bg-white transition-all hover:shadow-lg hover:scale-[1.01]"
+      style="border-color: ${theme.primary}"
+    >
+
+      <p class="text-xs font-bold tracking-[0.18em] uppercase mb-2"
+         style="color: ${theme.accent}">
+
+        Dengarkan pengalaman pakar
+
+      </p>
+
+      <h3 class="text-xl md:text-2xl font-extrabold text-[#153638]">
+
+        Kita tidak perlu mengalaminya, hanya ambil iktibar, jangan diulang kesilapan
+
+      </h3>
+
+      <div class="flex items-center mt-4 font-bold"
+           style="color: ${theme.primary}">
+
+        <span>
+          Klik untuk mendalaminya
+        </span>
+
+        <i data-lucide="arrow-right"
+           class="ml-2 w-5 h-5">
+        </i>
+
+      </div>
+
+    </button>
+
+  </div>
           </div>
         `
       },
