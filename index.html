@@ -315,12 +315,11 @@ pewarisan harta islam
         <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#153638]/95 via-[#153638]/55 to-transparent p-5 md:p-7">
 
           <p class="text-white text-sm md:text-base font-semibold">
-            PERANCANGAN HARTA
+            
           </p>
 
           <p class="text-white/85 text-xs md:text-sm mt-1">
-            Harta, waris, dokumen dan instrumen pewarisan —
-            semuanya perlu dilihat sebagai satu perjalanan.
+            
           </p>
 
         </div>
@@ -379,7 +378,7 @@ pewarisan harta islam
           <div>
 
             <h4 class="font-bold text-[#153638]">
-              Pendapatan — di sinilah semuanya bermula
+              Penghasilann — di sinilah semuanya bermula
             </h4>
 
             <p class="text-sm text-gray-600 mt-1">
@@ -552,23 +551,39 @@ pewarisan harta islam
     <!-- CTA ISU KEKAL -->
     <div class="mt-3">
 
-      <button
-        onclick="setActiveTab('faraid')"
-        class="w-full inline-flex items-center justify-center px-5 py-5 md:px-6 md:py-6 font-bold rounded-2xl border-2 bg-white transition-all hover:shadow-md hover:scale-[1.01]"
-        style="border-color: ${theme.primary}; color: ${theme.primary}"
-      >
+    <button
+      onclick="setActiveTab('faraid')"
+      class="w-full p-6 rounded-2xl text-left border-2 bg-white transition-all hover:shadow-lg hover:scale-[1.01]"
+      style="border-color: ${theme.primary}"
+    >
 
-        <span class="text-base md:text-lg">
-          Apa Jadi Kalau Tak Rancang?
+      <p class="text-xs font-bold tracking-[0.18em] uppercase mb-2"
+         style="color: ${theme.accent}">
+
+        Kenapa perlu rancang?
+
+      </p>
+
+      <h3 class="text-xl md:text-2xl font-extrabold text-[#153638]">
+
+        FARAID KAN ADA?
+
+      </h3>
+
+      <div class="flex items-center mt-4 font-bold"
+           style="color: ${theme.primary}">
+
+        <span>
+          Klik untuk memahami faraid
         </span>
 
         <i data-lucide="arrow-right"
-           class="ml-2 w-5 h-5"
-           style="color: ${theme.accent}">
+           class="ml-2 w-5 h-5">
         </i>
 
-      </button>
+      </div>
 
+    </button>
     </div>
 
   </div>
@@ -806,7 +821,7 @@ faraid: {
            style="color: ${theme.primary}">
 
         <span>
-          Kita lihat apa yang berlaku
+          Klik untuk lihat apa yang berlaku
         </span>
 
         <i data-lucide="arrow-right"
@@ -1037,7 +1052,39 @@ faraid: {
 
       </p>
 
+    <button
+      onclick="setActiveTab('isu')"
+      class="w-full p-6 rounded-2xl text-left border-2 bg-white transition-all hover:shadow-lg hover:scale-[1.01]"
+      style="border-color: ${theme.primary}"
+    >
 
+      <p class="text-xs font-bold tracking-[0.18em] uppercase mb-2"
+         style="color: ${theme.accent}">
+
+        Penyelesaian?
+
+      </p>
+
+      <h3 class="text-xl md:text-2xl font-extrabold text-[#153638]">
+
+        Apa yang boleh saya rancang?
+
+      </h3>
+
+      <div class="flex items-center mt-4 font-bold"
+           style="color: ${theme.primary}">
+
+        <span>
+          Klik untuk lihat apa solusinya
+        </span>
+
+        <i data-lucide="arrow-right"
+           class="ml-2 w-5 h-5">
+        </i>
+
+      </div>
+
+    </button>
       <button
         onclick="setActiveTab('solusi')"
         class="mt-6 inline-flex items-center px-8 py-4 font-bold rounded-xl shadow-lg text-white transition-all hover:scale-105 active:scale-95"
